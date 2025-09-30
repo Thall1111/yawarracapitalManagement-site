@@ -10,3 +10,24 @@ body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) strong {
 body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) ul li::marker {
   color: #ffffff !important;
 }
+
+/* === Bright text fix for lists inside panels in Dark Blue === */
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) p,
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) li,
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) ol,
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) ul,
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) strong,
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) h3,
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) h2 {
+  color: #ffffff !important;   /* force bright white text */
+}
+
+/* Ensure ordered list numbers are bright white */
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) ol li::marker {
+  color: #ffffff !important;
+}
+
+/* Ensure bullet points are also bright white */
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) ul li::marker {
+  color: #ffffff !important;
+}
