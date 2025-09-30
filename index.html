@@ -30,8 +30,12 @@
     .tab[aria-selected="true"]{background:#f6f8fc;border-color:#dfe4ef;color:#0f1520;}
     .tabpanel{margin-top:10px;}
     footer{padding:28px 20px;text-align:center;color:#6f7b8f;border-top:1px solid var(--line);}
-    .theme-toggle{position:fixed;right:16px;bottom:16px;z-index:1000;display:flex;gap:8px;padding:8px;background:var(--panel);border:1px solid var(--line);border-radius:12px;}
-    .theme-toggle button{padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--ink);font-weight:600;font-size:12px;cursor:pointer;}
+    /* Compact theme toggle */
+    .theme-toggle{position:fixed;right:16px;bottom:16px;z-index:1000;display:flex;gap:6px;}
+    .theme-toggle button{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);cursor:pointer;font-size:0;}
+    .theme-toggle button[data-theme="skyblue"]{background:#2b8cff;}
+    .theme-toggle button[data-theme="ochre"]{background:#c55410;}
+    .theme-toggle button[data-theme="white"]{background:#ffffff;border:1px solid #ccc;}
     /* Themes */
     body.theme-skyblue{--bg:#f5f9ff;--panel:#ffffff;--ink:#0f1520;--muted:#4f5b6a;--line:#dde6f5;--accent:#2b8cff;}
     body.theme-ochre{--bg:#fff5ef;--panel:#ffffff;--ink:#1a1e26;--muted:#5a636f;--line:#eed8cc;--accent:#c55410;}
@@ -142,24 +146,6 @@
         <li><strong>Dual Governance:</strong> ORIC (sovereign) with ASIC/AFSL (fiduciary) to avoid black-cladding.</li>
         <li><strong>Traceability:</strong> Version-controlled approvals and KPIs, audit-ready artifacts.</li>
       </ul>
-      <div style="max-width:980px;margin:14px auto 0;text-align:left;display:grid;gap:10px">
-        <details style="border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff">
-          <summary style="cursor:pointer;font-weight:700">Consent</summary>
-          <p>Plain-English documentation, cooling-off periods, community-led process, continuous consent to execution.</p>
-        </details>
-        <details style="border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff">
-          <summary style="cursor:pointer;font-weight:700">Cultural Authority & ICIP</summary>
-          <p>ICIP protocols embedded across contracts, branding and data handling; custodians retain decision rights.</p>
-        </details>
-        <details style="border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff">
-          <summary style="cursor:pointer;font-weight:700">Equity & Benefit Pathways</summary>
-          <p>Appropriate Indigenous ownership, revenue participation and local targets with clear step-ups and distributions.</p>
-        </details>
-        <details style="border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff">
-          <summary style="cursor:pointer;font-weight:700">Fiduciary & Regulatory</summary>
-          <p>ASIC/AFSL-grade documentation, risk registers and ESG reporting across both sovereign and corporate rails.</p>
-        </details>
-      </div>
     </div>
   </section>
 
@@ -195,7 +181,7 @@
   </section>
 
   <!-- Footer -->
-  <footer>© 2025 Yawarra Cultural Custodian Council · YCM</footer>
+  <footer>© 2025 Yawarra Cultural Custodian Council · Yawarra Capital Management</footer>
 
   <!-- Modal -->
   <div id="popup" class="modal">
@@ -207,4 +193,23 @@
     </div>
   </div>
 
-  <!-- Theme toggles (3
+  <!-- Theme toggles -->
+  <div class="theme-toggle" role="group" aria-label="Theme selector">
+    <button data-theme="skyblue" title="Sky Blue"></button>
+    <button data-theme="ochre" title="Ochre"></button>
+    <button data-theme="white" title="White"></button>
+  </div>
+
+  <script>
+    /* Songlines generator */
+    (function(){
+      const svg=document.getElementById('bg');
+      function r(a,b){return Math.random()*(b-a)+a}
+      function build(w,h,segs,y,amp,v){
+        const step=w/(segs-1);
+        const pts=Array.from({length:segs},(_,i)=>[i*step+r(-8,8),y+Math.sin(i*r(.6,.95))*amp+r(-v,v)]);
+        let d=`M ${pts[0][0]},${pts[0][1]}`;
+        for(let i=0;i<pts.length-1;i++){
+          const p0=pts[Math.max(0,i-1)],p1=pts[i],p2=pts[i+1],p3=pts[Math.min(pts.length-1,i+2)];
+          const c1=[p1[0]+(p2[0]-p0[0])/6,p1[1]+(p2[1]-p0[1])/6],c2=[p2[0]-(p3[0]-p1[0])/6,p2[1]-(p3[1]-p1[1])/6];
+          d+=` C ${c1[0]},${c1[1]} ${c
