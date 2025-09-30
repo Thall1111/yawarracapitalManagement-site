@@ -119,3 +119,12 @@ body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) ol li::ma
   width: auto;       /* keeps proportions */
   display: block;
 }
+.head img.logo {
+  margin-top: 4px;   /* adjust until it’s centered */
+}/* Fix logo size in header */
+.logo {
+  max-height: 48px;   /* fits neatly in the header */
+  width: auto;        /* keeps correct proportions */
+  display: inline-block;
+  vertical-align: middle;
+}
