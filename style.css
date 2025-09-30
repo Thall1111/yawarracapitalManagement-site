@@ -81,3 +81,22 @@ body.theme-darkblue .theme-toggle button[aria-pressed="true"] {
   color:#ffffff;
   outline:none;
 }
+/* === Fix: readable cards & popups while in Dark Blue === */
+body.theme-darkblue .card,
+body.theme-darkblue .modal-content,
+body.theme-darkblue details {
+  background:#ffffff !important;
+  color:#111318 !important;   /* dark text */
+  border-color:#e6e8ef !important;
+}
+
+body.theme-darkblue .card h3,
+body.theme-darkblue .card p,
+body.theme-darkblue .role,
+body.theme-darkblue .modal-content h3,
+body.theme-darkblue .modal-content p,
+body.theme-darkblue .modal-content li,
+body.theme-darkblue details *,
+body.theme-darkblue details p {
+  color:#111318 !important;
+}
