@@ -114,3 +114,8 @@ body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) ol li::ma
     height: 40px;     /* smaller logo for mobile */
   }
 }
+.logo {
+  height: 40px;      /* keeps it at a nice size in the navbar */
+  width: auto;       /* keeps proportions */
+  display: block;
+}
