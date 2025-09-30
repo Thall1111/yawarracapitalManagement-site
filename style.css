@@ -96,3 +96,8 @@ body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) ul li::ma
 body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) ol li::marker {
   color: #ffffff !important;
 }
+.logo {
+  height: 42px;          /* fits neatly inside header */
+  max-width: 160px;
+  vertical-align: middle;
+}
