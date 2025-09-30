@@ -1,420 +1,57 @@
 <!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>YCCC – Sovereign Capital · Cultural Assurance</title>
-
+  <title>Yawarra Cultural Custodian Council · YCM</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-
   <style>
-    /* === Base Theme Tokens === */
-    :root {
-      --bg: #ffffff;
-      --panel: #ffffff;
-      --ink: #111318;
-      --muted: #58606b;
-      --line: #e6e8ef;
-      --accent: #2b8cff;
-      --ochre: #c55410;
-    }
-
-    * {
-      box-sizing: border-box
-    }
-
-    html,
-    body {
-      height: 100%
-    }
-
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--ink);
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      letter-spacing: .01em;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      scroll-behavior: smooth;
-    }
-
-    /* === Header === */
-    .head {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 24px;
-      background: rgba(255, 255, 255, .75);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--line);
-      z-index: 40;
-    }
-
-    .brand {
-      text-decoration: none;
-      color: var(--ink);
-      font-weight: 800;
-      font-size: 14px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-
-    .nav a {
-      color: var(--ink);
-      text-decoration: none;
-      margin-left: 22px;
-      font-size: 14px;
-      font-weight: 600;
-      opacity: .9;
-    }
-
-    .nav a:hover {
-      color: var(--accent)
-    }
-
-    /* === Sections === */
-    section {
-      scroll-margin-top: 76px;
-    }
-
-    .section {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 96px 20px 80px;
-    }
-
-    h1 {
-      font-size: clamp(34px, 5vw, 64px);
-      line-height: 1.05;
-      margin: 0 0 10px;
-      font-weight: 800;
-      letter-spacing: -.01em
-    }
-
-    h2 {
-      font-size: clamp(22px, 3vw, 32px);
-      margin: 0 0 18px;
-      font-weight: 700
-    }
-
-    h3 {
-      font-size: 18px;
-      margin: 0 0 6px;
-      font-weight: 700
-    }
-
-    p.lead {
-      font-size: 17px;
-      line-height: 1.6;
-      max-width: 900px;
-      margin: 10px auto 6px;
-      color: var(--muted)
-    }
-
-    p {
-      font-size: 16px;
-      line-height: 1.6;
-      max-width: 900px;
-      margin: 10px auto;
-      color: #2b313a
-    }
-
-    ul,
-    ol {
-      max-width: 980px;
-      margin: 10px auto;
-      text-align: left;
-      font-size: 15.5px;
-      line-height: 1.65;
-      color: #2b313a
-    }
-
-    ul {
-      padding-left: 18px
-    }
-
-    ul li {
-      margin-bottom: 8px
-    }
-
-    /* minimalist accent bullets */
-    ul.check li {
-      list-style: none;
-      position: relative;
-      padding-left: 16px
-    }
-
-    ul.check li::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: .62em;
-      width: 8px;
-      height: 2px;
-      background: var(--accent);
-      border-radius: 1px;
-    }
-
-    /* === Panels === */
-    .panel {
-      width: 100%;
-      max-width: 1100px;
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 24px;
-      margin-top: 16px;
-      box-shadow: 0 1px 0 rgba(17, 19, 24, .02), 0 10px 30px rgba(17, 19, 24, .06);
-      text-align: left;
-    }
-
-    /* === Team Grid === */
-    .team-wrap {
-      width: 100%;
-      max-width: 1180px;
-      margin: 0 auto
-    }
-
-    .team-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 18px;
-      align-items: stretch
-    }
-
-    .card {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 16px 16px 14px;
-      text-align: center;
-      cursor: pointer;
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-      box-shadow: 0 6px 18px rgba(17, 19, 24, .06);
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      border-color: #d9deea;
-      box-shadow: 0 14px 34px rgba(17, 19, 24, .12)
-    }
-
-    .photo {
-      width: 84px;
-      height: 84px;
-      border-radius: 50%;
-      margin: 0 auto 12px;
-      background: #e9edf6;
-      background-size: cover;
-      background-position: center;
-      border: 1px solid #e1e6f0;
-    }
-
-    .role {
-      margin: 2px 0 0;
-      color: var(--muted);
-      font-weight: 600;
-      font-size: .95rem
-    }
-
-    /* === Modal === */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      inset: 0;
-      background: rgba(0, 0, 0, .45);
-      align-items: center;
-      justify-content: center;
-      padding: 20px
-    }
-
-    .modal-content {
-      background: #fff;
-      color: #111318;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      max-width: 780px;
-      width: 100%;
-      padding: 22px 22px;
-      position: relative;
-      text-align: left;
-      box-shadow: 0 24px 60px rgba(17, 19, 24, .25);
-    }
-
-    .close {
-      position: absolute;
-      top: 10px;
-      right: 12px;
-      font-size: 22px;
-      cursor: pointer;
-      color: #6f7b8f
-    }
-
-    /* === Tabs === */
-    .tabs {
-      width: 100%;
-      max-width: 1100px;
-      margin-top: 16px;
-    }
-
-    .tablist {
-      display: flex;
-      gap: 8px;
-      padding: 6px;
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      overflow: auto;
-    }
-
-    .tab {
-      appearance: none;
-      border: 1px solid transparent;
-      background: transparent;
-      color: #2b313a;
-      padding: 10px 14px;
-      border-radius: 10px;
-      font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .tab[aria-selected="true"] {
-      background: #f6f8fc;
-      border-color: #dfe4ef;
-      color: #0f1520;
-    }
-
-    .tabpanel {
-      margin-top: 10px;
-      padding: 0;
-      border: none;
-      background: transparent;
-    }
-
-    .tabpanel>.panel {
-      margin-top: 0;
-    }
-
-    /* === Footer === */
-    footer {
-      padding: 28px 20px;
-      text-align: center;
-      color: #6f7b8f;
-      border-top: 1px solid var(--line)
-    }
-
-    /* === Theme toggle === */
-    .theme-toggle {
-      position: fixed;
-      right: 16px;
-      bottom: 16px;
-      z-index: 1000;
-      display: flex;
-      gap: 8px;
-      padding: 8px;
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
-    }
-
-    .theme-toggle button {
-      appearance: none;
-      cursor: pointer;
-      padding: 8px 10px;
-      border-radius: 8px;
-      border: 1px solid var(--line);
-      background: transparent;
-      color: var(--ink);
-      font-weight: 600;
-      font-size: 12px;
-    }
-
-    .theme-toggle button[aria-pressed="true"] {
-      outline: 2px solid var(--accent);
-    }
-
-    /* === THEMES === */
-    body.theme-darkblue {
-      --bg: #0b1020;
-      --panel: #11162a;
-      --ink: #eef3ff;
-      --muted: #b7c1d9;
-      --line: #202743;
-      --accent: #75aaff;
-      --ochre: #c55410;
-    }
-
-    body.theme-darkblue .panel {
-      background: linear-gradient(180deg, #11162a, #0e1324);
-    }
-
-    body.theme-darkblue .tablist {
-      background: #0f1427;
-      border-color: #202743;
-    }
-
-    body.theme-darkblue .tab {
-      color: #e8eeff;
-    }
-
-    body.theme-darkblue .tab[aria-selected="true"] {
-      background: #151c36;
-      border-color: #2a3560;
-      color: #ffffff;
-    }
-
-    body.theme-skyblue {
-      --bg: #f5f9ff;
-      --panel: #ffffff;
-      --ink: #0f1520;
-      --muted: #4f5b6a;
-      --line: #dde6f5;
-      --accent: #2b8cff;
-      --ochre: #c55410;
-    }
-
-    body.theme-ochre {
-      --bg: #fff5ef;
-      --panel: #ffffff;
-      --ink: #1a1e26;
-      --muted: #5a636f;
-      --line: #eed8cc;
-      --accent: #c55410;
-      --ochre: #c55410;
-    }
-
-    body.theme-white {
-      --bg: #ffffff;
-      --panel: #ffffff;
-      --ink: #111318;
-      --muted: #58606b;
-      --line: #e6e8ef;
-      --accent: #2b8cff;
-      --ochre: #c55410;
-    }
+    :root{--bg:#ffffff;--panel:#ffffff;--ink:#111318;--muted:#58606b;--line:#e6e8ef;--accent:#2b8cff;--ochre:#c55410;}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,sans-serif;background:var(--bg);color:var(--ink);scroll-behavior:smooth;}
+    .head{position:fixed;top:0;left:0;right:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:rgba(255,255,255,.75);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:40;}
+    .brand{font-weight:800;font-size:14px;text-transform:uppercase;color:var(--ink);text-decoration:none;}
+    .nav a{color:var(--ink);margin-left:22px;font-size:14px;font-weight:600;text-decoration:none;}
+    .nav a:hover{color:var(--accent)}
+    section{scroll-margin-top:76px;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:96px 20px;text-align:center;}
+    h1{font-size:clamp(34px,5vw,64px);font-weight:800;margin:0 0 10px;}
+    h2{font-size:clamp(22px,3vw,32px);margin:0 0 18px;font-weight:700;}
+    p.lead{font-size:17px;line-height:1.6;max-width:900px;margin:10px auto;color:var(--muted);}
+    .panel{max-width:1100px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:24px;margin-top:16px;box-shadow:0 1px 0 rgba(17,19,24,.02),0 10px 30px rgba(17,19,24,.06);text-align:left;}
+    .team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;}
+    .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center;cursor:pointer;box-shadow:0 6px 18px rgba(17,19,24,.06);}
+    .photo{width:84px;height:84px;border-radius:50%;margin:0 auto 12px;background:#e9edf6;background-size:cover;background-position:center;}
+    .role{margin:2px 0 0;color:var(--muted);font-size:.95rem;}
+    .modal{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.45);align-items:center;justify-content:center;}
+    .modal-content{background:#fff;color:#111318;border:1px solid var(--line);border-radius:12px;max-width:780px;width:100%;padding:22px;text-align:left;position:relative;}
+    .close{position:absolute;top:10px;right:12px;font-size:22px;cursor:pointer;}
+    .tablist{display:flex;gap:8px;padding:6px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:auto;}
+    .tab{background:transparent;border:1px solid transparent;padding:10px 14px;border-radius:10px;font-weight:600;cursor:pointer;}
+    .tab[aria-selected="true"]{background:#f6f8fc;border-color:#dfe4ef;color:#0f1520;}
+    .tabpanel{margin-top:10px;}
+    footer{padding:28px 20px;text-align:center;color:#6f7b8f;border-top:1px solid var(--line);}
+    .theme-toggle{position:fixed;right:16px;bottom:16px;z-index:1000;display:flex;gap:8px;padding:8px;background:var(--panel);border:1px solid var(--line);border-radius:12px;}
+    .theme-toggle button{padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--ink);font-weight:600;font-size:12px;cursor:pointer;}
+    /* Dark Blue Fix */
+    body.theme-darkblue{--bg:#0b1020;--panel:#11162a;--ink:#eef3ff;--muted:#b7c1d9;--line:#202743;--accent:#75aaff;}
+    body.theme-darkblue .card,body.theme-darkblue .modal-content{background:#fff;color:#111318;border-color:#e6e8ef;}
+    body.theme-darkblue .card h3,body.theme-darkblue .card p,body.theme-darkblue .modal-content *{color:#111318!important;}
+    body.theme-darkblue .panel:not(.card):not(.modal-content) p{color:#eef3ff;}
+    body.theme-darkblue .tablist{background:#0f1427;border-color:#202743;}
+    body.theme-darkblue .tab{color:#e8eeff;}
+    body.theme-darkblue .tab[aria-selected="true"]{background:#151c36;color:#fff;}
   </style>
 </head>
-
 <body>
-  <!-- HEADER -->
+  <!-- Songlines background -->
+  <div class="songwrap" aria-hidden="true">
+    <svg id="bg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice"></svg>
+  </div>
+
+  <!-- Header -->
   <header class="head">
-    <a href="#top" class="brand">YCCC</a>
-    <nav class="nav" aria-label="Primary">
+    <a href="#top" class="brand">YCCC · YCM</a>
+    <nav class="nav">
       <a href="#who">Who We Are</a>
       <a href="#team">Team</a>
       <a href="#projects">Projects</a>
@@ -425,89 +62,97 @@
     </nav>
   </header>
 
-  <!-- HERO -->
-  <section id="top" class="section">
-    <div>
-      <h1>Sovereign Governance. Cultural Authority. Intergenerational Stewardship.</h1>
-      <p class="lead">The Yawarra Cultural Custodians Council (YCCC) is the sovereign body ensuring alignment with cultural law, Elder approvals, and intergenerational benefit-sharing.</p>
-    </div>
+  <!-- Hero -->
+  <section id="top">
+    <h1>Sovereign Governance. Cultural Authority. Stewardship.</h1>
+    <p class="lead">Yawarra Cultural Custodian Council (YCCC) & Yawarra Capital Management (YCM) — embedding cultural law, Elder approvals, and intergenerational benefit in every project.</p>
   </section>
 
-  <!-- WHO WE ARE -->
+  <!-- Who -->
   <section id="who" class="section">
     <div class="panel">
       <h2>Mission</h2>
-      <p class="lead">The YCCC safeguards Indigenous sovereignty in every project, ensuring cultural law and Elder approvals are respected.</p>
-
+      <p class="lead">Safeguarding Indigenous sovereignty through CAF & FPIC, certifying projects that protect Country, respect culture, and create long-term community value.</p>
       <h2>Vision</h2>
       <p class="lead">A future where Indigenous sovereignty guides Australia’s transition to a just and sustainable economy.</p>
-
       <h2>Differentiators</h2>
-      <ul class="check">
-        <li><strong>Dual Rail Governance</strong>: Cultural sovereignty alongside fiduciary governance.</li>
-        <li><strong>Sovereign Certification</strong>: Eliminates “black-cladding” risk.</li>
-        <li><strong>Scalable Platform</strong>: Structures for both community and institutional partners.</li>
-        <li><strong>Traceability & Audit</strong>: Secure, transparent records of decisions.</li>
+      <ul>
+        <li>Dual Rail Governance — Cultural sovereignty + fiduciary law.</li>
+        <li>Sovereign Certification — CAF ensures legitimacy and Elder approval.</li>
+        <li>Scalable Platform — Funds, SPVs, and institutional partnerships.</li>
+        <li>Traceability — All approvals logged, audit-ready.</li>
       </ul>
     </div>
   </section>
 
-  <!-- TEAM -->
+  <!-- Team -->
   <section id="team" class="section">
-    <div class="team-wrap">
-      <h2>Team</h2>
-      <p class="lead">Guided by the <strong>Cultural Custodian Council</strong> and partners, blending cultural governance with institutional expertise.</p>
-
-      <div class="team-grid">
-        <article class="card" data-name="Tim Hall" data-role="Founder & Koradji (Cultural Lead)" data-photo="https://via.placeholder.com/600x600.png?text=Tim+Hall"
-          data-bio="Indigenous Wiradjuri founder integrating cultural law with governance and investment structuring."
-          data-points="Founder, Yawarra Capital;Cultural Assurance Framework design;Approvals from Wiradjuri Elders">
-          <div class="photo"></div>
-          <h3>Tim Hall</h3>
-          <p class="role">Founder & Koradji</p>
-        </article>
-      </div>
+    <h2>Our Team</h2>
+    <div class="team-grid">
+      <article class="card" data-name="Tim Hall" data-role="Founder & Koradji" data-photo="https://via.placeholder.com/600" data-bio="Indigenous Wiradjuri founder integrating cultural law with institutional-grade governance and investment structuring.">
+        <div class="photo"></div><h3>Tim Hall</h3><p class="role">Founder & Koradji</p>
+      </article>
+      <article class="card" data-name="Chair (TBA)" data-role="Chair" data-photo="https://via.placeholder.com/600" data-bio="Chair of the Board providing governance oversight, fiduciary discipline and cultural alignment.">
+        <div class="photo"></div><h3>Chair</h3><p class="role">Placeholder</p>
+      </article>
+      <article class="card" data-name="David Hunt" data-role="Strategic Advisor" data-photo="https://via.placeholder.com/600" data-bio="30+ years in global finance and corporate strategy; former CEO of an ASX-listed company.">
+        <div class="photo"></div><h3>David Hunt</h3><p class="role">Advisor</p>
+      </article>
+      <article class="card" data-name="Paul Johnston" data-role="Strategic Advisor" data-photo="https://via.placeholder.com/600" data-bio="Chartered Accountant with 25 years across Big 4 and multinational FMCG.">
+        <div class="photo"></div><h3>Paul Johnston</h3><p class="role">Advisor</p>
+      </article>
+      <article class="card" data-name="Jennifer Lauber Patterson" data-role="Managing Director (FIG)" data-photo="https://via.placeholder.com/600" data-bio="30+ years in impact finance, carbon trading and investment banking.">
+        <div class="photo"></div><h3>Jennifer Lauber Patterson</h3><p class="role">FIG MD</p>
+      </article>
     </div>
   </section>
 
-  <!-- PROJECTS -->
+  <!-- Projects -->
   <section id="projects" class="section">
     <h2>Projects</h2>
-    <p class="lead">Flagship initiatives across funds and SPVs in energy transition, nature repair and circular systems.</p>
-    <div class="tabs" data-tabs>
-      <div role="tablist" class="tablist">
-        <button role="tab" class="tab" aria-selected="true">Yawarra Capital Management</button>
-        <button role="tab" class="tab" aria-selected="false">YARNT Fund</button>
-        <button role="tab" class="tab" aria-selected="false">Energy & Infrastructure</button>
-        <button role="tab" class="tab" aria-selected="false">Nature Repair</button>
-      </div>
-      <div class="tabpanel"><div class="panel"><h3>Yawarra Capital Management</h3><p>Indigenous-led clean energy, nature repair, low-carbon infrastructure.</p></div></div>
-      <div class="tabpanel" hidden><div class="panel"><h3>YARNT Fund</h3><p>Accelerating nature-positive economy with Indigenous governance.</p></div></div>
-      <div class="tabpanel" hidden><div class="panel"><h3>Energy & Infrastructure</h3><p>Solar, wind, storage, waste-to-energy, and enabling infrastructure.</p></div></div>
-      <div class="tabpanel" hidden><div class="panel"><h3>Nature Repair</h3><p>Biodiversity, soil regeneration, water and circular systems.</p></div></div>
+    <div class="tablist" role="tablist">
+      <button class="tab" aria-selected="true">YCM</button>
+      <button class="tab">YARNT</button>
+      <button class="tab">Energy & Infrastructure</button>
+      <button class="tab">Nature Repair</button>
     </div>
+    <div class="tabpanel"><div class="panel"><h3>Yawarra Capital Management</h3><p>Indigenous-led fund manager for energy transition and nature repair.</p></div></div>
+    <div class="tabpanel" hidden><div class="panel"><h3>YARNT Fund</h3><p>Accelerating biodiversity and regenerative agriculture projects with Indigenous governance.</p></div></div>
+    <div class="tabpanel" hidden><div class="panel"><h3>Energy & Infrastructure</h3><p>SPVs for renewable generation, storage, and enabling infrastructure.</p></div></div>
+    <div class="tabpanel" hidden><div class="panel"><h3>Nature Repair</h3><p>High-integrity restoration, water systems, and circular economy projects.</p></div></div>
   </section>
 
-  <!-- ACCELERATOR -->
+  <!-- Accelerator -->
   <section id="accelerator" class="section">
-    <h2>Project Development & Accelerator</h2>
-    <p class="lead">Support for Indigenous and aligned entrepreneurs across governance rails.</p>
+    <h2>Accelerator</h2>
+    <div class="tablist" role="tablist">
+      <button class="tab" aria-selected="true">Overview</button>
+      <button class="tab">Screening</button>
+    </div>
+    <div class="tabpanel"><div class="panel"><h3>Overview</h3><ol><li>Screening</li><li>Consent & Cultural Gate</li><li>Risk & Alignment</li><li>Due Diligence</li><li>Structuring</li></ol></div></div>
+    <div class="tabpanel" hidden><div class="panel"><h3>Screening</h3><p>Mandate fit, cultural authority, risks, capital ask, and next steps confirmed.</p></div></div>
   </section>
 
   <!-- CAF -->
   <section id="caf" class="section">
     <div class="panel">
       <h2>Cultural Assurance Framework (CAF)</h2>
-      <p class="lead">Operationalises FPIC, ICIP and benefit pathways for all projects.</p>
+      <ul>
+        <li>FPIC — Free, Prior and Informed Consent.</li>
+        <li>ICIP & Data Sovereignty.</li>
+        <li>Equity & Benefits for Indigenous communities.</li>
+        <li>Dual Governance (ORIC + ASIC/AFSL).</li>
+        <li>Traceability & audit-ready approvals.</li>
+      </ul>
     </div>
   </section>
 
-  <!-- SERVICES -->
+  <!-- Services -->
   <section id="services" class="section">
     <div class="panel">
       <h2>Services</h2>
-      <ul class="check">
-        <li>Sovereign Certification & Assurance</li>
+      <ul>
+        <li>Sovereign Certification</li>
         <li>Investment Advisory</li>
         <li>Project Development</li>
         <li>Investor & Partner Assurance</li>
@@ -515,25 +160,88 @@
     </div>
   </section>
 
-  <!-- PARTNERSHIPS -->
+  <!-- Partnerships -->
   <section id="partnerships" class="section">
     <div class="panel">
       <h2>Partnerships</h2>
       <ul>
-        <li>ORIC — Indigenous governance regulator</li>
-        <li>IBA — Indigenous investment pathways</li>
-        <li>FIG — AFSL trustee partner</li>
-        <li>Aigi — Indigenous-led legal partner</li>
+        <li>FIG — Fiduciary Partner</li>
+        <li>IBA — Indigenous pathways</li>
+        <li>Aigi & Janke Legal — Governance partners</li>
+        <li>Supply Nation — Procurement certification</li>
+        <li>GoVault — Sovereign ledger pilot</li>
       </ul>
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer>
-    © 2025 Yawarra Cultural Custodian Council · All rights reserved.
-  </footer>
+  <!-- Footer -->
+  <footer>© 2025 Yawarra Cultural Custodian Council & YCM</footer>
 
-  <!-- THEME TOGGLE -->
+  <!-- Modal -->
+  <div id="popup" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3 id="popup-name"></h3>
+      <p id="popup-role"></p>
+      <p id="popup-bio"></p>
+    </div>
+  </div>
+
+  <!-- Theme toggles -->
   <div class="theme-toggle">
-    <button type="button" data-theme="darkblue">Dark Blue</button>
-    <button type="button" data-theme="skyblue">Sky Blue
+    <button data-theme="darkblue">Dark Blue</button>
+    <button data-theme="skyblue">Sky Blue</button>
+    <button data-theme="ochre">Ochre</button>
+    <button data-theme="white">White</button>
+  </div>
+
+  <script>
+    /* Songlines generator */
+    (function(){
+      const svg=document.getElementById('bg');
+      function r(a,b){return Math.random()*(b-a)+a}
+      function build(w,h,segs,y,amp,v){
+        const step=w/(segs-1);
+        const pts=Array.from({length:segs},(_,i)=>[i*step+r(-8,8),y+Math.sin(i*r(.6,.95))*amp+r(-v,v)]);
+        let d=`M ${pts[0][0]},${pts[0][1]}`;
+        for(let i=0;i<pts.length-1;i++){
+          const p0=pts[Math.max(0,i-1)],p1=pts[i],p2=pts[i+1],p3=pts[Math.min(pts.length-1,i+2)];
+          const c1=[p1[0]+(p2[0]-p0[0])/6,p1[1]+(p2[1]-p0[1])/6],c2=[p2[0]-(p3[0]-p1[0])/6,p2[1]-(p3[1]-p1[1])/6];
+          d+=` C ${c1[0]},${c1[1]} ${c2[0]},${c2[1]} ${p2[0]},${p2[1]}`;
+        }
+        return d;
+      }
+      function mk(stroke){
+        const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+        p.setAttribute('class','sl');p.setAttribute('stroke',stroke);
+        p.style.strokeDasharray=`1 ${Math.round(r(11,16))}`;
+        p.style.animation=`sl-drift ${Math.round(r(25,50))}s linear infinite`;
+        return p;
+      }
+      function regen(){
+        while(svg.firstChild) svg.removeChild(svg.firstChild);
+        const defs=document.createElementNS('http://www.w3.org/2000/svg','defs');
+        defs.innerHTML='<filter id="sl-glow"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
+        svg.appendChild(defs);
+        const w=1440,h=900,ys=[h*.3,h*.5,h*.7],amps=[80,60,40];
+        const colors=['#5a9cff','#c55410','rgba(0,0,0,.6)'];
+        ys.forEach((y,i)=>{const p=mk(colors[i]);p.setAttribute('d',build(w,h,7,y,amps[i],h*.06));svg.appendChild(p)});
+      }
+      regen();window.addEventListener('resize',regen);
+    })();
+
+    // Apply photos
+    document.querySelectorAll('.card').forEach(card=>{
+      const ph=card.querySelector('.photo');
+      if(card.dataset.photo) ph.style.backgroundImage=`url('${card.dataset.photo}')`;
+    });
+
+    // Modal
+    const modal=document.getElementById('popup');
+    const nameEl=document.getElementById('popup-name');
+    const roleEl=document.getElementById('popup-role');
+    const bioEl=document.getElementById('popup-bio');
+    document.querySelectorAll('.card').forEach(c=>{
+      c.addEventListener('click',()=>{
+        modal.style.display='flex';
+        name
