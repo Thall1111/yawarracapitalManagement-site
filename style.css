@@ -1,18 +1,1 @@
-/* === Logo sizing & responsiveness === */
-.logo {
-  max-height: 48px;   /* fits neatly inside header */
-  width: auto;        /* keeps proportions */
-  display: inline-block;
-  vertical-align: middle;
-  object-fit: contain;
-}
 
-.head img.logo {
-  margin-top: 4px;   /* adjust if it’s not vertically centered */
-}
-
-@media (max-width: 768px) {
-  .logo {
-    max-height: 40px;  /* smaller logo for mobile */
-  }
-}
