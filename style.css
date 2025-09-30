@@ -171,3 +171,17 @@ body.theme-darkblue .theme-toggle button[aria-pressed="true"] {
   color:#ffffff;
   outline:none;
 }
+/* === Fix: Bio modal readability in Dark Blue === */
+body.theme-darkblue .modal-content {
+  background:#ffffff !important;   /* white background */
+  color:#111318 !important;        /* dark text */
+  border-color:#e6e8ef !important;
+}
+
+body.theme-darkblue .modal-content h3,
+body.theme-darkblue .modal-content p,
+body.theme-darkblue .modal-content li,
+body.theme-darkblue .modal-content .pop-role,
+body.theme-darkblue .modal-content .pop-name {
+  color:#111318 !important;        /* force dark text */
+}
