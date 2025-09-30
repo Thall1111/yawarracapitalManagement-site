@@ -1,1406 +1,539 @@
 <!doctype html>
-
 <html lang="en">
 
 <head>
-
-<meta charset="utf-8" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-<title>YCCC – Sovereign Capital · Cultural Assurance</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-
-<style>
-
-  :root{
-
-    --bg:#ffffff;         /* light canvas */
-
-    --panel:#ffffff;      /* card surface */
-
-    --ink:#111318;        /* primary text */
-
-    --muted:#58606b;      /* secondary text */
-
-    --line:#e6e8ef;       /* hairline */
-
-    --accent:#2b8cff;     /* link/accent */
-
-    --ochre:#c55410;      /* secondary highlight */
-
-  }
-
-  *{box-sizing:border-box}
-
-  html,body{height:100%}
-
-  body{
-
-    margin:0; background:var(--bg); color:var(--ink);
-
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-
-    letter-spacing:.01em; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-
-    scroll-behavior:smooth;
-
-  }
-
-  /* Songlines background (SVG) */
-
-  .songwrap{position:fixed; inset:0; z-index:-1; pointer-events:none;}
-
-  svg#bg{width:100%; height:100%; display:block}
-
-  .sl{fill:none; stroke-linecap:round; stroke-width:2.2; stroke-dasharray:1 14; filter:url(#sl-glow); opacity:.35}
-
-  @keyframes sl-drift {from{stroke-dashoffset:0} to{stroke-dashoffset:-1200}}
-
-  /* Header */
-
-  .head{
-
-    position:fixed; top:0; left:0; right:0; height:64px;
-
-    display:flex; align-items:center; justify-content:space-between;
-
-    padding:0 24px; background:rgba(255,255,255,.75); backdrop-filter:blur(8px);
-
-    border-bottom:1px solid var(--line); z-index:40;
-
-  }
-
-  .brand{ text-decoration:none; color:var(--ink); font-weight:800; font-size:14px; letter-spacing:.08em; text-transform:uppercase; }
-
-  .nav a{ color:var(--ink); text-decoration:none; margin-left:22px; font-size:14px; font-weight:600; opacity:.9; }
-
-  .nav a:hover{ color:var(--accent) }
-
-  /* Sections */
-
-  section { scroll-margin-top: 76px; }
-
-  .section{
-
-    min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
-
-    text-align:center; padding:96px 20px 80px;
-
-  }
-
-  h1{ font-size:clamp(34px,5vw,64px); line-height:1.05; margin:0 0 10px; font-weight:800; letter-spacing:-.01em }
-
-  h2{ font-size:clamp(22px,3vw,32px); margin:0 0 18px; font-weight:700 }
-
-  h3{ font-size:18px; margin:0 0 6px; font-weight:700 }
-
-  p.lead{ font-size:17px; line-height:1.6; max-width:900px; margin:10px auto 6px; color:var(--muted) }
-
-  p{ font-size:16px; line-height:1.6; max-width:900px; margin:10px auto; color:#2b313a }
-
-  ul,ol{ max-width:980px; margin:10px auto; text-align:left; font-size:15.5px; line-height:1.65; color:#2b313a }
-
-  ul{ padding-left:18px }
-
-  ul li{ margin-bottom:8px }
-
-  /* minimalist accent bullets */
-
-  ul.check li{ list-style:none; position:relative; padding-left:16px }
-
-  ul.check li::before{
-
-    content:""; position:absolute; left:0; top:.62em; width:8px; height:2px; background:var(--accent); border-radius:1px;
-
-  }
-
-  /* Panels / cards */
-
-  .panel{
-
-    width:100%; max-width:1100px; background:var(--panel);
-
-    border:1px solid var(--line); border-radius:12px; padding:24px; margin-top:16px;
-
-    box-shadow:0 1px 0 rgba(17,19,24,.02), 0 10px 30px rgba(17,19,24,.06);
-
-    text-align:left;
-
-  }
-
-  /* Team grid */
-
-  .team-wrap{ width:100%; max-width:1180px; margin:0 auto }
-
-  .team-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; align-items:stretch }
-
-  .card{
-
-    background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px 16px 14px;
-
-    text-align:center; cursor:pointer; transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-
-    box-shadow:0 6px 18px rgba(17,19,24,.06);
-
-  }
-
-  .card:hover{ transform:translateY(-2px); border-color:#d9deea; box-shadow:0 14px 34px rgba(17,19,24,.12) }
-
-  .photo{
-
-    width:84px; height:84px; border-radius:50%; margin:0 auto 12px; background:#e9edf6;
-
-    background-size:cover; background-position:center; border:1px solid #e1e6f0;
-
-  }
-
-  .role{ margin:2px 0 0; color:var(--muted); font-weight:600; font-size:.95rem }
-
-  /* Modal (Bio popup) */
-
-  .modal{ display:none; position:fixed; z-index:1000; inset:0; background:rgba(0,0,0,.45);
-
-          align-items:center; justify-content:center; padding:20px }
-
-  .modal-content{
-
-    background:#fff; color:#111318; /* lock: dark on white inside popup */
-
-    border:1px solid var(--line); border-radius:12px; max-width:780px; width:100%;
-
-    padding:22px 22px; position:relative; text-align:left; box-shadow:0 24px 60px rgba(17,19,24,.25);
-
-  }
-
-  .close{ position:absolute; top:10px; right:12px; font-size:22px; cursor:pointer; color:#6f7b8f }
-
-  .pop-hdr{ display:flex; gap:16px; align-items:center; margin-bottom:10px }
-
-  .pop-ava{ width:64px; height:64px; border-radius:50%; background:#e9edf6; background-size:cover; background-position:center; border:1px solid #e1e6f0 }
-
-  .pop-name{ margin:0; font-size:20px; color:#111318 }
-
-  .pop-role{ margin:2px 0 6px; color:#58606b; font-weight:600 }
-
-  .pop-body p{ margin:0 0 10px; color:#2b313a }
-
-  .pop-body li{ margin:6px 0; color:#2b313a }
-
-  /* Tabs */
-
-  .tabs { width:100%; max-width:1100px; margin-top:16px; }
-
-  .tablist{
-
-    display:flex; gap:8px; padding:6px; background:#fff; border:1px solid var(--line); border-radius:12px; overflow:auto;
-
-  }
-
-  .tab{
-
-    appearance:none; border:1px solid transparent; background:transparent; color:#2b313a;
-
-    padding:10px 14px; border-radius:10px; font-weight:600; font-size:14px; cursor:pointer; white-space:nowrap;
-
-  }
-
-  .tab[aria-selected="true"]{
-
-    background:#f6f8fc; border-color:#dfe4ef; color:#0f1520;
-
-  }
-
-  .tabpanel{ margin-top:10px; padding:0; border:none; background:transparent; }
-
-  .tabpanel > .panel{ margin-top:0; }
-
-  /* Footer */
-
-  footer{ padding:28px 20px; text-align:center; color:#6f7b8f; border-top:1px solid var(--line) }
-
-  a.inline{ color:var(--accent); text-decoration:none }
-
-  a.inline:hover{ text-decoration:underline }
-
-  @media (prefers-reduced-motion: reduce) { .sl { animation: none !important; } }
-
-  /* === Theme toggle === */
-
-  .theme-toggle{
-
-    position:fixed; right:16px; bottom:16px; z-index:1000;
-
-    display:flex; gap:8px; padding:8px;
-
-    background:var(--panel); border:1px solid var(--line); border-radius:12px;
-
-    box-shadow:0 8px 24px rgba(0,0,0,.08);
-
-  }
-
-  .theme-toggle button{
-
-    appearance:none; cursor:pointer;
-
-    padding:8px 10px; border-radius:8px; border:1px solid var(--line);
-
-    background:transparent; color:var(--ink); font-weight:600; font-size:12px;
-
-  }
-
-  .theme-toggle button[aria-pressed="true"]{ outline:2px solid var(--accent); }
-
-  /* === THEMES (override tokens) === */
-
-  /* Dark Blue (high contrast sitewide, but popups stay dark-on-white) */
-
-  body.theme-darkblue{
-
-    --bg:#0b1020;
-
-    --panel:#11162a;
-
-    --ink:#eef3ff;
-
-    --muted:#b7c1d9;
-
-    --line:#202743;
-
-    --accent:#75aaff;
-
-    --ochre:#c55410;
-
-  }
-
-  body.theme-darkblue .panel{ background:linear-gradient(180deg,#11162a,#0e1324); }
-
-  body.theme-darkblue .tablist{ background:#0f1427; border-color:#202743; }
-
-  body.theme-darkblue .tab{ color:#e8eeff; }
-
-  body.theme-darkblue .tab[aria-selected="true"]{ background:#151c36; border-color:#2a3560; color:#ffffff; }
-
-  body.theme-darkblue .head{ background:rgba(10,14,28,.75); border-bottom-color:#202743; }
-
-  body.theme-darkblue .lead,
-
-  body.theme-darkblue h1, body.theme-darkblue h2, body.theme-darkblue h3,
-
-  body.theme-darkblue p{ color:#eef3ff; }
-
-  /* Keep modal content readable (locked above). */
-
-  /* Sky Blue */
-
-  body.theme-skyblue{
-
-    --bg:#f5f9ff; --panel:#ffffff; --ink:#0f1520; --muted:#4f5b6a; --line:#dde6f5; --accent:#2b8cff; --ochre:#c55410;
-
-  }
-
-  /* Ochre */
-
-  body.theme-ochre{
-
-    --bg:#fff5ef; --panel:#ffffff; --ink:#1a1e26; --muted:#5a636f; --line:#eed8cc; --accent:#c55410; --ochre:#c55410;
-
-  }
-
-  /* White (default corporate) */
-
-  body.theme-white{
-
-    --bg:#ffffff; --panel:#ffffff; --ink:#111318; --muted:#58606b; --line:#e6e8ef; --accent:#2b8cff; --ochre:#c55410;
-
-  }
-
-  /* Songline tint per theme (optional) */
-
-  body.theme-darkblue .sl{ opacity:.28; stroke:#5a9cff; }
-
-  body.theme-ochre .sl{ opacity:.35; stroke:#c55410; }
-
-  body.theme-skyblue .sl, body.theme-white .sl{ opacity:.35; }
-
-</style>
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YCCC – Sovereign Capital · Cultural Assurance</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* === Base Theme Tokens === */
+    :root {
+      --bg: #ffffff;
+      --panel: #ffffff;
+      --ink: #111318;
+      --muted: #58606b;
+      --line: #e6e8ef;
+      --accent: #2b8cff;
+      --ochre: #c55410;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      height: 100%
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: .01em;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+
+    /* === Header === */
+    .head {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(255, 255, 255, .75);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+      z-index: 40;
+    }
+
+    .brand {
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .nav a {
+      color: var(--ink);
+      text-decoration: none;
+      margin-left: 22px;
+      font-size: 14px;
+      font-weight: 600;
+      opacity: .9;
+    }
+
+    .nav a:hover {
+      color: var(--accent)
+    }
+
+    /* === Sections === */
+    section {
+      scroll-margin-top: 76px;
+    }
+
+    .section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 96px 20px 80px;
+    }
+
+    h1 {
+      font-size: clamp(34px, 5vw, 64px);
+      line-height: 1.05;
+      margin: 0 0 10px;
+      font-weight: 800;
+      letter-spacing: -.01em
+    }
+
+    h2 {
+      font-size: clamp(22px, 3vw, 32px);
+      margin: 0 0 18px;
+      font-weight: 700
+    }
+
+    h3 {
+      font-size: 18px;
+      margin: 0 0 6px;
+      font-weight: 700
+    }
+
+    p.lead {
+      font-size: 17px;
+      line-height: 1.6;
+      max-width: 900px;
+      margin: 10px auto 6px;
+      color: var(--muted)
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 900px;
+      margin: 10px auto;
+      color: #2b313a
+    }
+
+    ul,
+    ol {
+      max-width: 980px;
+      margin: 10px auto;
+      text-align: left;
+      font-size: 15.5px;
+      line-height: 1.65;
+      color: #2b313a
+    }
+
+    ul {
+      padding-left: 18px
+    }
+
+    ul li {
+      margin-bottom: 8px
+    }
+
+    /* minimalist accent bullets */
+    ul.check li {
+      list-style: none;
+      position: relative;
+      padding-left: 16px
+    }
+
+    ul.check li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .62em;
+      width: 8px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 1px;
+    }
+
+    /* === Panels === */
+    .panel {
+      width: 100%;
+      max-width: 1100px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 16px;
+      box-shadow: 0 1px 0 rgba(17, 19, 24, .02), 0 10px 30px rgba(17, 19, 24, .06);
+      text-align: left;
+    }
+
+    /* === Team Grid === */
+    .team-wrap {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      align-items: stretch
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px 16px 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      box-shadow: 0 6px 18px rgba(17, 19, 24, .06);
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: #d9deea;
+      box-shadow: 0 14px 34px rgba(17, 19, 24, .12)
+    }
+
+    .photo {
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      margin: 0 auto 12px;
+      background: #e9edf6;
+      background-size: cover;
+      background-position: center;
+      border: 1px solid #e1e6f0;
+    }
+
+    .role {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: .95rem
+    }
+
+    /* === Modal === */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      inset: 0;
+      background: rgba(0, 0, 0, .45);
+      align-items: center;
+      justify-content: center;
+      padding: 20px
+    }
+
+    .modal-content {
+      background: #fff;
+      color: #111318;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      max-width: 780px;
+      width: 100%;
+      padding: 22px 22px;
+      position: relative;
+      text-align: left;
+      box-shadow: 0 24px 60px rgba(17, 19, 24, .25);
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      font-size: 22px;
+      cursor: pointer;
+      color: #6f7b8f
+    }
+
+    /* === Tabs === */
+    .tabs {
+      width: 100%;
+      max-width: 1100px;
+      margin-top: 16px;
+    }
+
+    .tablist {
+      display: flex;
+      gap: 8px;
+      padding: 6px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: auto;
+    }
+
+    .tab {
+      appearance: none;
+      border: 1px solid transparent;
+      background: transparent;
+      color: #2b313a;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .tab[aria-selected="true"] {
+      background: #f6f8fc;
+      border-color: #dfe4ef;
+      color: #0f1520;
+    }
+
+    .tabpanel {
+      margin-top: 10px;
+      padding: 0;
+      border: none;
+      background: transparent;
+    }
+
+    .tabpanel>.panel {
+      margin-top: 0;
+    }
+
+    /* === Footer === */
+    footer {
+      padding: 28px 20px;
+      text-align: center;
+      color: #6f7b8f;
+      border-top: 1px solid var(--line)
+    }
+
+    /* === Theme toggle === */
+    .theme-toggle {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 1000;
+      display: flex;
+      gap: 8px;
+      padding: 8px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+    }
+
+    .theme-toggle button {
+      appearance: none;
+      cursor: pointer;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .theme-toggle button[aria-pressed="true"] {
+      outline: 2px solid var(--accent);
+    }
+
+    /* === THEMES === */
+    body.theme-darkblue {
+      --bg: #0b1020;
+      --panel: #11162a;
+      --ink: #eef3ff;
+      --muted: #b7c1d9;
+      --line: #202743;
+      --accent: #75aaff;
+      --ochre: #c55410;
+    }
+
+    body.theme-darkblue .panel {
+      background: linear-gradient(180deg, #11162a, #0e1324);
+    }
+
+    body.theme-darkblue .tablist {
+      background: #0f1427;
+      border-color: #202743;
+    }
+
+    body.theme-darkblue .tab {
+      color: #e8eeff;
+    }
+
+    body.theme-darkblue .tab[aria-selected="true"] {
+      background: #151c36;
+      border-color: #2a3560;
+      color: #ffffff;
+    }
+
+    body.theme-skyblue {
+      --bg: #f5f9ff;
+      --panel: #ffffff;
+      --ink: #0f1520;
+      --muted: #4f5b6a;
+      --line: #dde6f5;
+      --accent: #2b8cff;
+      --ochre: #c55410;
+    }
+
+    body.theme-ochre {
+      --bg: #fff5ef;
+      --panel: #ffffff;
+      --ink: #1a1e26;
+      --muted: #5a636f;
+      --line: #eed8cc;
+      --accent: #c55410;
+      --ochre: #c55410;
+    }
+
+    body.theme-white {
+      --bg: #ffffff;
+      --panel: #ffffff;
+      --ink: #111318;
+      --muted: #58606b;
+      --line: #e6e8ef;
+      --accent: #2b8cff;
+      --ochre: #c55410;
+    }
+  </style>
 </head>
 
 <body>
-
-  <!-- Songlines background -->
-
-  <div class="songwrap" aria-hidden="true">
-
-    <svg id="bg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice"></svg>
-
-  </div>
-
-  <!-- Header -->
-
+  <!-- HEADER -->
   <header class="head">
-
     <a href="#top" class="brand">YCCC</a>
-
     <nav class="nav" aria-label="Primary">
-
       <a href="#who">Who We Are</a>
-
       <a href="#team">Team</a>
-
       <a href="#projects">Projects</a>
-
       <a href="#accelerator">Accelerator</a>
-
       <a href="#caf">CAF</a>
-
       <a href="#services">Services</a>
-
       <a href="#partnerships">Partnerships</a>
-
     </nav>
-
   </header>
 
-  <!-- Hero -->
-
+  <!-- HERO -->
   <section id="top" class="section">
-
     <div>
-
       <h1>Sovereign Governance. Cultural Authority. Intergenerational Stewardship.</h1>
-
-      <p class="lead">The Yawarra Cultural Custodians Council (YCCC) is the sovereign body ensuring that 
-
-        all investment, enterprise, and governance aligns with cultural law, Elder approvals, 
-
-        and intergenerational benefit-sharing. 
-        
-        </p>
-
+      <p class="lead">The Yawarra Cultural Custodians Council (YCCC) is the sovereign body ensuring alignment with cultural law, Elder approvals, and intergenerational benefit-sharing.</p>
     </div>
-
   </section>
 
-  <!-- Who We Are -->
-
+  <!-- WHO WE ARE -->
   <section id="who" class="section">
-
     <div class="panel">
-
       <h2>Mission</h2>
-
-      <p class="lead">The Yawarra Cultural Custodians Council (YCCC) safeguards Indigenous sovereignty 
-  in every project. Our mission is to ensure that investment, enterprise, and 
-  development align with cultural law, Elder approvals, and intergenerational benefit.  
-  Through the Cultural Assurance Framework (CAF) and Free, Prior and Informed Consent (FPIC), 
-  we certify projects that protect Country, respect culture, and create long-term value 
-  for communities.</p>
+      <p class="lead">The YCCC safeguards Indigenous sovereignty in every project, ensuring cultural law and Elder approvals are respected.</p>
 
       <h2>Vision</h2>
-
-      <p class="lead">Our vision is a future where Indigenous sovereignty guides Australia’s transition 
-  to a just and sustainable economy. By protecting Country, embedding cultural authority, 
-  and ensuring intergenerational benefit, we create a nation where investment, 
-  infrastructure, and enterprise honour both culture and community.</p>
+      <p class="lead">A future where Indigenous sovereignty guides Australia’s transition to a just and sustainable economy.</p>
 
       <h2>Differentiators</h2>
-<ul class="check">
-  <li>
-    <strong>Dual Rail Governance</strong>: Cultural sovereignty (ORIC, YCCC) alongside fiduciary governance (ASIC, AFSL). 
-    This ensures every decision meets both cultural law and corporate law.
-  </li>
-  <li>
-    <strong>Sovereign Certification</strong>: Our Cultural Assurance Framework (CAF) eliminates “black-cladding” risk 
-    by guaranteeing cultural legitimacy and Elder approval.
-  </li>
-  <li>
-    <strong>Scalable Platform</strong>: From Indigenous-majority funds (YCM, YARNT) to project-level SPVs, 
-    we provide a structure that adapts to both community and institutional partners.
-  </li>
-  <li>
-    <strong>Traceability & Audit</strong>: All approvals, certifications, and decisions are securely recorded 
-    with integrity controls, ensuring transparency for both community and investors.
-  </li>
-</ul>
-
+      <ul class="check">
+        <li><strong>Dual Rail Governance</strong>: Cultural sovereignty alongside fiduciary governance.</li>
+        <li><strong>Sovereign Certification</strong>: Eliminates “black-cladding” risk.</li>
+        <li><strong>Scalable Platform</strong>: Structures for both community and institutional partners.</li>
+        <li><strong>Traceability & Audit</strong>: Secure, transparent records of decisions.</li>
+      </ul>
     </div>
-
   </section>
 
-  <!-- Team -->
-
+  <!-- TEAM -->
   <section id="team" class="section">
-
     <div class="team-wrap">
-
       <h2>Team</h2>
-
-      <p class="lead">CGuided by the <strong>Cultural Custodian Council (CCC)</strong> and supported by 
-      fiduciary partner <strong>Frontier Impact Group (FIG)</strong>, our team brings together 
-      cultural governance, independent strategic advisory, and institutional expertise.  
-      Together we steward projects across finance, clean energy, infrastructure, and nature repair.
-    </p>
-      <h3 style="text-align:left;max-width:1180px;margin:18px auto 10px;">Leadership</h3>
+      <p class="lead">Guided by the <strong>Cultural Custodian Council</strong> and partners, blending cultural governance with institutional expertise.</p>
 
       <div class="team-grid">
-
-        <article class="card" data-name="(To be announced)" data-role="Chair"
-
-          data-photo="https://via.placeholder.com/600x600.png?text=Chair"
-
-          data-bio="Chair of the Board providing governance oversight, fiduciary discipline and cultural alignment."
-
-          data-points="Chairs the Board;Strategic direction;Dual governance oversight;Executive performance">
-
-          <div class="photo"></div><h3>Chair</h3><p class="role">Placeholder</p>
-
+        <article class="card" data-name="Tim Hall" data-role="Founder & Koradji (Cultural Lead)" data-photo="https://via.placeholder.com/600x600.png?text=Tim+Hall"
+          data-bio="Indigenous Wiradjuri founder integrating cultural law with governance and investment structuring."
+          data-points="Founder, Yawarra Capital;Cultural Assurance Framework design;Approvals from Wiradjuri Elders">
+          <div class="photo"></div>
+          <h3>Tim Hall</h3>
+          <p class="role">Founder & Koradji</p>
         </article>
-
-        <article class="card" data-name="(To be announced)" data-role="Managing Director"
-
-          data-photo="https://via.placeholder.com/600x600.png?text=Managing+Director"
-
-          data-bio="Managing Director accountable for organisation performance, strategy execution and partner engagement."
-
-          data-points="Strategy execution;Operating rhythm;Governance committees;Project and fund outcomes">
-
-          <div class="photo"></div><h3>Managing Director</h3><p class="role">Placeholder</p>
-
-        </article>
-
-        <article class="card" data-name="Tim Hall" data-role="Founder & Koradji (Cultural Lead)"
-
-          data-photo="https://via.placeholder.com/600x600.png?text=Tim+Hall"
-
-          data-bio="Indigenous Wiradjuri founder integrating cultural law with institutional-grade governance and investment structuring."
-
-          data-points="Founder, Yawarra Capital & CCCH;Cultural Assurance Framework design;Creative and investment leadership;Approvals from Wiradjuri Elders">
-
-          <div class="photo"></div><h3>Tim Hall</h3><p class="role">Founder & Koradji</p>
-
-        </article>
-
-        <article class="card" data-name="(To be announced)" data-role="Director"
-
-          data-photo="https://via.placeholder.com/600x600.png?text=Director"
-
-          data-bio="Director providing board-level governance and fiduciary oversight."
-
-          data-points="Board governance;Strategy oversight;Fiduciary integrity;Stakeholder engagement">
-
-          <div class="photo"></div><h3>Director</h3><p class="role">Placeholder</p>
-
-        </article>
-
-        <article class="card" data-name="(To be announced)" data-role="Chief Financial Officer"
-
-          data-photo="https://via.placeholder.com/600x600.png?text=CFO"
-
-          data-bio="CFO responsible for financial governance, reporting and capital management."
-
-          data-points="Financial reporting;Capital allocation;Investor reporting;Risk and treasury">
-
-          <div class="photo"></div><h3>Chief Financial Officer</h3><p class="role">Placeholder</p>
-
-        </article>
-
       </div>
-
-      <h3 style="text-align:left;max-width:1180px;margin:28px auto 10px;">CCCH / Yawarra Advisors</h3>
-
-      <div class="team-grid">
-
-        <article class="card" data-name="David Hunt" data-role="Strategic Advisor"
-
-          data-photo="https://via.placeholder.com/600x600.png?text=David+Hunt"
-
-          data-bio="30+ years in global finance and corporate strategy; former CEO of an ASX-listed company."
-
-          data-points="Investment and structuring;Project finance;Cross-border associates (EU/SEA);Energy, water, agri, finance">
-
-          <div class="photo"></div><h3>David Hunt</h3><p class="role">Strategic Advisor</p>
-
-        </article>
-
-        <article class="card" data-name="Paul Johnston" data-role="Strategic Advisor"
-
-          data-photo="https://via.placeholder.com/600x600.png?text=Paul+Johnston"
-
-          data-bio="Chartered Accountant with 25 years across Big 4 and multinational FMCG."
-
-          data-points="AUD 25m–6bn transactions;Governance and risk;Finance transformation;Integration leadership">
-
-          <div class="photo"></div><h3>Paul Johnston</h3><p class="role">Strategic Advisor</p>
-
-        </article>
-
-        <article class="card" data-name="Ian Sampson" data-role="Strategic Advisor"
-
-          data-photo="https://via.placeholder.com/600x600.png?text=Ian+Sampson"
-
-          data-bio="30+ years in governance, strategy and risk; senior roles at BHP and CSR."
-
-          data-points="Chairs risk committees;Board evaluation and remuneration;Org change;Multi-sector experience">
-
-          <div class="photo"></div><h3>Ian Sampson</h3><p class="role">Strategic Advisor</p>
-
-        </article>
-
-        <article class="card" data-name="Kelly Dallas" data-role="Strategic Advisor"
-
-          data-photo="https://via.placeholder.com/600x600.png?text=Kelly+Dallas"
-
-          data-bio="International executive and renewable energy leader; ex-BlackRock VP."
-
-          data-points="Technical due diligence;Asset performance;O&M/AM contracts;Solar and wind portfolios">
-
-          <div class="photo"></div><h3>Kelly Dallas</h3><p class="role">Strategic Advisor</p>
-
-        </article>
-
-      </div>
-
-      <h3 style="text-align:left;max-width:1180px;margin:28px auto 10px;">Frontier Impact Group (FIG) Advisors</h3>
-
-      <div class="team-grid">
-
-        <article class="card" data-name="Jennifer Lauber Patterson" data-role="Managing Director (FIG)"
-
-          data-photo="https://via.placeholder.com/600x600.png?text=Jennifer+Lauber+Patterson"
-
-          data-bio="30+ years in impact finance, carbon trading and investment banking."
-
-          data-points="Carbon strategy;Institutional mandates;Scalable instruments;FIG leadership">
-
-          <div class="photo"></div><h3>Jennifer Lauber Patterson</h3><p class="role">Managing Director</p>
-
-        </article>
-
-        <article class="card" data-name="Shawn Butters" data-role="Nature Repair Lead (FIG)"
-
-          data-photo="https://via.placeholder.com/600x600.png?text=Shawn+Butters"
-
-          data-bio="Pioneer in regenerative agriculture with 40+ years across funds and asset management."
-
-          data-points="Landscape repair systems;Nature-positive models;MRV approaches;Resilience focus">
-
-          <div class="photo"></div><h3>Shawn Butters</h3><p class="role">Nature Repair Lead</p>
-
-        </article>
-
-        <article class="card" data-name="Mal Campbell" data-role="Energy Transition Lead (FIG)"
-
-          data-photo="https://via.placeholder.com/600x600.png?text=Mal+Campbell"
-
-          data-bio="35+ years in executive energy roles."
-
-          data-points="Bankable structuring;Valuation and pricing;Tech commercialisation;Market interfaces">
-
-          <div class="photo"></div><h3>Mal Campbell</h3><p class="role">Energy Transition Lead</p>
-
-        </article>
-
-        <article class="card" data-name="Carl Daley" data-role="Energy Innovator (FIG)"
-
-          data-photo="https://via.placeholder.com/600x600.png?text=Carl+Daley"
-
-          data-bio="35+ years in energy leadership; founded advisory acquired by Schneider Electric."
-
-          data-points="Innovation to scale;Go-to-market;OT/grid integration;Partnerships">
-
-          <div class="photo"></div><h3>Carl Daley</h3><p class="role">Energy Innovator</p>
-
-        </article>
-
-        <article class="card" data-name="Jeremy Mansfield OAM" data-role="Low-Carbon Materials & Systems (FIG)"
-
-          data-photo="https://via.placeholder.com/600x600.png?text=Jeremy+Mansfield+OAM"
-
-          data-bio="30+ years transitioning supply chains to net zero."
-
-          data-points="Low-carbon materials;Circular systems;Supplier transition;Standards and compliance">
-
-          <div class="photo"></div><h3>Jeremy Mansfield OAM</h3><p class="role">Low-Carbon Materials</p>
-
-        </article>
-
-        <article class="card" data-name="Michael Dontschuk" data-role="Chair, Investment Committee (FIG)"
-
-          data-photo="https://via.placeholder.com/600x600.png?text=Michael+Dontschuk"
-
-          data-bio="~40 years in finance and treasury; former Treasurer of ANZ."
-
-          data-points="Capital markets;IC governance;Risk frameworks;Performance oversight">
-
-          <div class="photo"></div><h3>Michael Dontschuk</h3><p class="role">Investment Committee Chair</p>
-
-        </article>
-
-        <article class="card" data-name="Sebastian Loewenstein" data-role="Investment Committee (FIG)"
-
-          data-photo="https://via.placeholder.com/600x600.png?text=Sebastian+Loewenstein"
-
-          data-bio="Former CEFC executive managing large clean-energy mandates."
-
-          data-points="Impact frameworks;Portfolio construction;Product design;Mandate compliance">
-
-          <div class="photo"></div><h3>Sebastian Loewenstein</h3><p class="role">Investment Committee</p>
-
-        </article>
-
-        <article class="card" data-name="Edward Kus" data-role="Carbon & Renewables Specialist (FIG)"
-
-          data-photo="https://via.placeholder.com/600x600.png?text=Edward+Kus"
-
-          data-bio="Legal and governance specialist across renewables and carbon."
-
-          data-points="Contracts and risk;Carbon transactions;Governance at scale;Bankability">
-
-          <div class="photo"></div><h3>Edward Kus</h3><p class="role">Carbon & Renewables</p>
-
-        </article>
-
-      </div>
-
     </div>
-
   </section>
 
-  <!-- Projects -->
-
-  <section id="projects" class="section" aria-labelledby="projects-title">
-
-    <h2 id="projects-title" style="margin-bottom:8px">Projects</h2>
-
-    <p class="lead" style="max-width:1100px">Flagship initiatives across funds and SPVs in energy transition, nature repair and circular systems. All proceed through the Cultural Assurance Framework (CAF) and enter investment-ready.</p>
-
+  <!-- PROJECTS -->
+  <section id="projects" class="section">
+    <h2>Projects</h2>
+    <p class="lead">Flagship initiatives across funds and SPVs in energy transition, nature repair and circular systems.</p>
     <div class="tabs" data-tabs>
-
-      <div role="tablist" aria-label="Projects tabs" class="tablist">
-
-        <button role="tab" class="tab" aria-selected="true" aria-controls="panel-proj-ycm">Yawarra Capital Management (YCM)</button>
-
-        <button role="tab" class="tab" aria-selected="false" aria-controls="panel-proj-yarnt">YARNT Fund</button>
-
-        <button role="tab" class="tab" aria-selected="false" aria-controls="panel-proj-energy">Energy & Infrastructure SPVs</button>
-
-        <button role="tab" class="tab" aria-selected="false" aria-controls="panel-proj-nature">Nature Repair, Water & Circularity</button>
-
+      <div role="tablist" class="tablist">
+        <button role="tab" class="tab" aria-selected="true">Yawarra Capital Management</button>
+        <button role="tab" class="tab" aria-selected="false">YARNT Fund</button>
+        <button role="tab" class="tab" aria-selected="false">Energy & Infrastructure</button>
+        <button role="tab" class="tab" aria-selected="false">Nature Repair</button>
       </div>
-
-      <div id="panel-proj-ycm" role="tabpanel" class="tabpanel" aria-labelledby="tab-proj-ycm">
-
-        <div class="panel">
-
-          <h3>Yawarra Capital Management (YCM)</h3>
-
-          <p class="lead">Indigenous-led manager (Hybrid ORIC–ASIC, 51% Indigenous ownership) focused on clean energy, nature repair and low-carbon infrastructure.</p>
-
-          <ul class="check">
-
-            <li><strong>Mandate:</strong> Energy transition, nature repair, low-carbon materials.</li>
-
-            <li><strong>Governance:</strong> Dual-rail (ORIC + ASIC/AFSL); Indigenous ownership and board oversight.</li>
-
-            <li><strong>Pipeline:</strong> Multi-asset SPVs and programmatic capital with institutional partners.</li>
-
-            <li><strong>Reporting:</strong> Quarterly investor reporting aligned to CAF outcomes and KPIs.</li>
-
-          </ul>
-
-          <div style="max-width:980px;margin:14px auto 0;text-align:left;display:grid;gap:10px">
-
-            <details style="border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff">
-
-              <summary style="cursor:pointer;font-weight:700">Strategy & Products</summary>
-
-              <p>Programmatic SPV structures and pooled vehicles targeting bankable assets with clear CAF alignment and measurable impact.</p>
-
-            </details>
-
-            <details style="border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff">
-
-              <summary style="cursor:pointer;font-weight:700">Risk & Compliance</summary>
-
-              <p>AFSL-aligned controls; conflicts management; ESG and cultural risk registers integrated with investment memos.</p>
-
-            </details>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <div id="panel-proj-yarnt" role="tabpanel" class="tabpanel" aria-labelledby="tab-proj-yarnt" hidden>
-
-        <div class="panel">
-
-          <h3>YARNT Fund</h3>
-
-          <p class="lead">Joint initiative with institutional partners to accelerate a nature-positive economy with Indigenous governance embedded from origination.</p>
-
-          <ul class="check">
-
-            <li><strong>Focus:</strong> Landscape repair, biodiversity, regenerative agriculture, carbon-aligned projects.</li>
-
-            <li><strong>Instruments:</strong> Equity, revenue-share and outcome-based structures suited to project stage.</li>
-
-            <li><strong>Measurement:</strong> Nature and community outcomes mapped to CAF gates and investor KPIs.</li>
-
-            <li><strong>Partnerships:</strong> Delivery partners across MRV, land management and local employment.</li>
-
-          </ul>
-
-          <div style="max-width:980px;margin:14px auto 0;text-align:left;display:grid;gap:10px">
-
-            <details style="border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff">
-
-              <summary style="cursor:pointer;font-weight:700">Ticket Sizes & Staging</summary>
-
-              <p>Seed to growth rounds with milestone-based tranching tied to CAF consent and ecological KPIs.</p>
-
-            </details>
-
-            <details style="border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff">
-
-              <summary style="cursor:pointer;font-weight:700">Co-Investment</summary>
-
-              <p>Co-investment rights for aligned institutions and community vehicles subject to CAF approvals.</p>
-
-            </details>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <div id="panel-proj-energy" role="tabpanel" class="tabpanel" aria-labelledby="tab-proj-energy" hidden>
-
-        <div class="panel">
-
-          <h3>Energy & Infrastructure SPVs</h3>
-
-          <p class="lead">Bankable platforms across generation, storage and enabling infrastructure, structured for institutional capital and community benefits.</p>
-
-          <ul class="check">
-
-            <li><strong>Verticals:</strong> Solar, wind, storage, waste-to-energy, microgrids and enabling infrastructure.</li>
-
-            <li><strong>Contracts:</strong> O&M and AM optimization; grid and offtake strategies aligned to risk allocation.</li>
-
-            <li><strong>Community:</strong> Local jobs, procurement targets and cultural heritage management embedded.</li>
-
-            <li><strong>Exit:</strong> Hold/operate or recycle with pre-agreed rights and reporting continuity.</li>
-
-          </ul>
-
-          <div style="max-width:980px;margin:14px auto 0;text-align:left;display:grid;gap:10px">
-
-            <details style="border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff">
-
-              <summary style="cursor:pointer;font-weight:700">Diligence & Delivery</summary>
-
-              <p>Technical, financial and ESG diligence with community review loops; construction to operations handover plans.</p>
-
-            </details>
-
-            <details style="border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff">
-
-              <summary style="cursor:pointer;font-weight:700">Risk Framework</summary>
-
-              <p>FID and NTP gates tied to CAF approvals, grid milestones and counterparty readiness.</p>
-
-            </details>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <div id="panel-proj-nature" role="tabpanel" class="tabpanel" aria-labelledby="tab-proj-nature" hidden>
-
-        <div class="panel">
-
-          <h3>Nature Repair, Water & Circularity</h3>
-
-          <p class="lead">High-integrity restoration, water systems and circular materials projects with traceable community and ecological outcomes.</p>
-
-          <ul class="check">
-
-            <li><strong>Nature Repair:</strong> Biodiversity corridors, soil regeneration, revegetation and cultural fire practices.</li>
-
-            <li><strong>Water & Waste:</strong> Water efficiency, treatment, reuse and circular systems including WtE where appropriate.</li>
-
-            <li><strong>Materials:</strong> Low-carbon materials and logistics with supplier transition programs.</li>
-
-            <li><strong>MRV:</strong> Fit-for-purpose measurement and reporting linked to CAF and investor KPIs.</li>
-
-          </ul>
-
-          <div style="max-width:980px;margin:14px auto 0;text-align:left;display:grid;gap:10px">
-
-            <details style="border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff">
-
-              <summary style="cursor:pointer;font-weight:700">Community Benefits</summary>
-
-              <p>Co-design with custodians, shared revenue pathways and local procurement with transparent distribution rules.</p>
-
-            </details>
-
-            <details style="border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff">
-
-              <summary style="cursor:pointer;font-weight:700">Standards & Compliance</summary>
-
-              <p>Alignment with national standards and investor taxonomies; audit-ready registers for approvals and outcomes.</p>
-
-            </details>
-
-          </div>
-
-        </div>
-
-      </div>
-
+      <div class="tabpanel"><div class="panel"><h3>Yawarra Capital Management</h3><p>Indigenous-led clean energy, nature repair, low-carbon infrastructure.</p></div></div>
+      <div class="tabpanel" hidden><div class="panel"><h3>YARNT Fund</h3><p>Accelerating nature-positive economy with Indigenous governance.</p></div></div>
+      <div class="tabpanel" hidden><div class="panel"><h3>Energy & Infrastructure</h3><p>Solar, wind, storage, waste-to-energy, and enabling infrastructure.</p></div></div>
+      <div class="tabpanel" hidden><div class="panel"><h3>Nature Repair</h3><p>Biodiversity, soil regeneration, water and circular systems.</p></div></div>
     </div>
-
   </section>
 
-  <!-- Accelerator -->
-
-  <section id="accelerator" class="section" aria-labelledby="accelerator-title">
-
-    <h2 id="accelerator-title" style="margin-bottom:8px">Project Development & Accelerator</h2>
-
-    <p class="lead" style="max-width:1100px">Support for Indigenous and aligned entrepreneurs across two governance rails: YCCC + CCCH (sovereign) and YCM (fund manager).</p>
-
-    <div class="tabs" data-tabs>
-
-      <div role="tablist" aria-label="Accelerator tabs" class="tablist">
-
-        <button role="tab" class="tab" aria-selected="true" aria-controls="panel-acc-overview">Overview</button>
-
-        <button role="tab" class="tab" aria-selected="false" aria-controls="panel-acc-screening">Initial Screening (SPF lite)</button>
-
-      </div>
-
-      <div id="panel-acc-overview" role="tabpanel" class="tabpanel" aria-labelledby="tab-acc-overview">
-
-        <div class="panel">
-
-          <h3>Overview</h3>
-
-          <ol>
-
-            <li><strong>Initial Screening:</strong> Mandate fit, counterparties, cultural map.</li>
-
-            <li><strong>Consent & Cultural Gate:</strong> Custodian engagement, consent documentation, cultural knowledge register.</li>
-
-            <li><strong>Risk & Alignment:</strong> Cultural, legal, regulatory and financial risks; benefits and equity pathways.</li>
-
-            <li><strong>Due Diligence:</strong> Technical, financial, legal and governance validation with community review loop.</li>
-
-            <li><strong>Investment Structuring:</strong> Finalise SPV/fund terms; embed benefit-sharing and reporting.</li>
-
-          </ol>
-
-        </div>
-
-      </div>
-
-      <div id="panel-acc-screening" role="tabpanel" class="tabpanel" aria-labelledby="tab-acc-screening" hidden>
-
-        <div class="panel">
-
-          <h3>Project Screening (lite)</h3>
-
-          <p class="lead">A concise, plain-English gate to confirm cultural, strategic and fiduciary fit before deeper work.</p>
-
-          <ul class="check">
-
-            <li>Mandate & thematic fit (energy, nature repair, water/waste, materials)</li>
-
-            <li>Cultural authority identified; consent pathway and custodians mapped</li>
-
-            <li>Counterparties & governance clarified</li>
-
-            <li>Stage & timing: readiness, permits, land access, critical path</li>
-
-            <li>Capital ask & use defined: amount, structure, deployment timeline</li>
-
-            <li>Data room readiness checked (financials, technical, legal, ESG)</li>
-
-            <li>Early risks logged (cultural, legal, regulatory, commercial)</li>
-
-            <li>Next step agreed: diligence scope, owners, and timeline</li>
-
-          </ul>
-
-        </div>
-
-      </div>
-
-    </div>
-
+  <!-- ACCELERATOR -->
+  <section id="accelerator" class="section">
+    <h2>Project Development & Accelerator</h2>
+    <p class="lead">Support for Indigenous and aligned entrepreneurs across governance rails.</p>
   </section>
 
   <!-- CAF -->
-
   <section id="caf" class="section">
-
     <div class="panel">
-
       <h2>Cultural Assurance Framework (CAF)</h2>
-
-      <p class="lead">The Cultural Assurance Framework operationalises FPIC, ICIP and benefit pathways. Projects clear these gateways prior to capital deployment.</p>
-
-      <ul class="check">
-
-        <li><strong>FPIC:</strong> Free, Prior and Informed Consent via culturally legitimate processes; revocable until execution.</li>
-
-        <li><strong>ICIP & Data Sovereignty:</strong> Custodian-governed knowledge, data and symbols reflected in contracting and reporting.</li>
-
-        <li><strong>Equity & Benefits:</strong> Where appropriate, Indigenous ownership at manager/SPV level, revenue participation, jobs and procurement targets.</li>
-
-        <li><strong>Dual Governance:</strong> ORIC (sovereign) with ASIC/AFSL (fiduciary) to avoid black-cladding.</li>
-
-        <li><strong>Traceability:</strong> Version-controlled approvals and KPIs, audit-ready artifacts.</li>
-
-      </ul>
-
-      <div style="max-width:980px;margin:14px auto 0;text-align:left;display:grid;gap:10px">
-
-        <details style="border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff">
-
-          <summary style="cursor:pointer;font-weight:700">Consent</summary>
-
-          <p>Plain-English documentation, cooling-off periods, community-led process, continuous consent to execution.</p>
-
-        </details>
-
-        <details style="border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff">
-
-          <summary style="cursor:pointer;font-weight:700">Cultural Authority & ICIP</summary>
-
-          <p>ICIP protocols embedded across contracts, branding and data handling; custodians retain decision rights.</p>
-
-        </details>
-
-        <details style="border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff">
-
-          <summary style="cursor:pointer;font-weight:700">Equity & Benefit Pathways</summary>
-
-          <p>Appropriate Indigenous ownership, revenue participation and local targets with clear step-ups and distributions.</p>
-
-        </details>
-
-        <details style="border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff">
-
-          <summary style="cursor:pointer;font-weight:700">Fiduciary & Regulatory</summary>
-
-          <p>ASIC/AFSL-grade documentation, risk registers and ESG reporting across both sovereign and corporate rails.</p>
-
-        </details>
-
-      </div>
-
+      <p class="lead">Operationalises FPIC, ICIP and benefit pathways for all projects.</p>
     </div>
-
   </section>
 
-  <!-- Services -->
-
+  <!-- SERVICES -->
   <section id="services" class="section">
-
     <div class="panel">
-
       <h2>Services</h2>
-
       <ul class="check">
-
-        <li>Sovereign Certification & Assurance — FPIC, ICIP and governance approvals.</li>
-
-        <li>Investment Advisory — structuring, capital raising, fiduciary alignment, impact reporting.</li>
-
-        <li>Project Development — support for Indigenous and aligned entrepreneurs.</li>
-
-        <li>Investor & Partner Assurance — quarterly reporting, co-investment rights and audit trail.</li>
-
+        <li>Sovereign Certification & Assurance</li>
+        <li>Investment Advisory</li>
+        <li>Project Development</li>
+        <li>Investor & Partner Assurance</li>
       </ul>
-
     </div>
-
   </section>
 
-  <!-- Partnerships -->
-
+  <!-- PARTNERSHIPS -->
   <section id="partnerships" class="section">
-
     <div class="panel">
-
       <h2>Partnerships</h2>
-
       <ul>
-
         <li>ORIC — Indigenous governance regulator</li>
-
-        <li>IBA — Indigenous investment and financing pathways</li>
-
-        <li>FIG — JV partner with YCM/YARNT, AFSL trustee</li>
-
+        <li>IBA — Indigenous investment pathways</li>
+        <li>FIG — AFSL trustee partner</li>
         <li>Aigi — Indigenous-led legal partner</li>
-
-        <li>Janke Legal — ICIP and governance specialists</li>
-
-        <li>Supply Nation — national Indigenous procurement certification</li>
-
-        <li>GoVault — sovereign ledger pilot for certification logging</li>
-
       </ul>
-
     </div>
-
   </section>
 
+  <!-- FOOTER -->
   <footer>
-
     © 2025 Yawarra Cultural Custodian Council · All rights reserved.
-
   </footer>
 
-  <!-- Modal -->
-
-  <div id="popup" class="modal" role="dialog" aria-modal="true" aria-labelledby="popup-name">
-
-    <div class="modal-content">
-
-      <span class="close" aria-label="Close">&times;</span>
-
-      <div class="pop-hdr">
-
-        <div id="pop-ava" class="pop-ava" aria-hidden="true"></div>
-
-        <div>
-
-          <h3 id="popup-name" class="pop-name"></h3>
-
-          <p id="popup-role" class="pop-role"></p>
-
-        </div>
-
-      </div>
-
-      <div class="pop-body">
-
-        <p id="popup-bio"></p>
-
-        <ul id="popup-points"></ul>
-
-      </div>
-
-    </div>
-
-  </div>
-
-  <!-- Theme Toggle (single source of truth) -->
-
-  <div class="theme-toggle" role="group" aria-label="Color themes">
-
+  <!-- THEME TOGGLE -->
+  <div class="theme-toggle">
     <button type="button" data-theme="darkblue">Dark Blue</button>
-
-    <button type="button" data-theme="skyblue">Sky Blue</button>
-
-    <button type="button" data-theme="ochre">Ochre</button>
-
-    <button type="button" data-theme="white">White</button>
-
-  </div>
-
-  <script>
-
-  /* Songlines generator */
-
-  (function(){
-
-    const svg=document.getElementById('bg');
-
-    function r(a,b){return Math.random()*(b-a)+a}
-
-    function build(w,h,segs,y,amp,v){
-
-      const step=w/(segs-1);
-
-      const pts=Array.from({length:segs},(_,i)=>[i*step+r(-8,8), y+Math.sin(i*r(.6,.95))*amp+r(-v,v)]);
-
-      let d=`M ${pts[0][0]},${pts[0][1]}`;
-
-      for(let i=0;i<pts.length-1;i++){
-
-        const p0=pts[Math.max(0,i-1)],p1=pts[i],p2=pts[i+1],p3=pts[Math.min(pts.length-1,i+2)];
-
-        const c1=[p1[0]+(p2[0]-p0[0])/6, p1[1]+(p2[1]-p0[1])/6],
-
-              c2=[p2[0]-(p3[0]-p1[0])/6, p2[1]-(p3[1]-p1[1])/6];
-
-        d+=` C ${c1[0]},${c1[1]} ${c2[0]},${c2[1]} ${p2[0]},${p2[1]}`;
-
-      }
-
-      return d;
-
-    }
-
-    function mk(stroke){
-
-      const p=document.createElementNS('http://www.w3.org/2000/svg','path');
-
-      p.setAttribute('class','sl'); p.setAttribute('stroke',stroke);
-
-      p.style.strokeDasharray=`1 ${Math.round(r(11,16))}`;
-
-      p.style.animation=`sl-drift ${Math.round(r(25,50))}s linear infinite`;
-
-      return p;
-
-    }
-
-    function regen(){
-
-      while(svg.firstChild) svg.removeChild(svg.firstChild);
-
-      const defs=document.createElementNS('http://www.w3.org/2000/svg','defs');
-
-      defs.innerHTML='<filter id="sl-glow"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
-
-      svg.appendChild(defs);
-
-      const w=1440,h=900, ys=[h*.3,h*.5,h*.7], amps=[80,60,40];
-
-      const colors=['#5a9cff', '#c55410', 'rgba(0,0,0,.6)'];
-
-      ys.forEach((y,i)=>{const p=mk(colors[i]);p.setAttribute('d',build(w,h,7,y,amps[i],h*.06));svg.appendChild(p)});
-
-    }
-
-    regen(); window.addEventListener('resize',regen);
-
-  })();
-
-  /* Apply data-photo to card thumbnails */
-
-  function applyPhotos(){
-
-    document.querySelectorAll('.card').forEach(card=>{
-
-      const url = card.dataset.photo || '';
-
-      const ph = card.querySelector('.photo');
-
-      if (url && ph) ph.style.backgroundImage = `url('${url}')`;
-
-    });
-
-  }
-
-  /* Team bio popup (focus-safe) */
-
-  (function(){
-
-    const popup = document.getElementById('popup');
-
-    const avatar= document.getElementById('pop-ava');
-
-    const nameEl= document.getElementById('popup-name');
-
-    const roleEl= document.getElementById('popup-role');
-
-    const bioEl = document.getElementById('popup-bio');
-
-    const ulEl  = document.getElementById('popup-points');
-
-    const close = document.querySelector('.close');
-
-    let lastFocus = null;
-
-    function openCard(card){
-
-      lastFocus = document.activeElement;
-
-      popup.style.display='flex';
-
-      nameEl.textContent = card.dataset.name || '';
-
-      roleEl.textContent = card.dataset.role || '';
-
-      bioEl.textContent  = card.dataset.bio  || '';
-
-      avatar.style.backgroundImage = card.dataset.photo ? `url('${card.dataset.photo}')` : '';
-
-      ulEl.innerHTML='';
-
-      (card.dataset.points||'').split(';').map(s=>s.trim()).filter(Boolean).forEach(p=>{
-
-        const li=document.createElement('li'); li.textContent=p; ulEl.appendChild(li);
-
-      });
-
-      close.focus();
-
-    }
-
-    function hide(){
-
-      popup.style.display='none';
-
-      if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
-
-    }
-
-    document.querySelectorAll('.card').forEach(c=>{
-
-      c.addEventListener('click',()=>openCard(c));
-
-      c.setAttribute('tabindex','0');
-
-      c.addEventListener('keydown',e=>{
-
-        if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openCard(c); }
-
-      });
-
-    });
-
-    close.addEventListener('click',hide);
-
-    window.addEventListener('click',e=>{if(e.target===popup) hide()});
-
-    document.addEventListener('keydown',e=>{if(e.key==='Escape') hide()});
-
-  })();
-
-  /* Generic tabs */
-
-  (function(){
-
-    document.querySelectorAll('[data-tabs]').forEach(root=>{
-
-      const tabs = Array.from(root.querySelectorAll('[role="tab"]'));
-
-      const panels = Array.from(root.querySelectorAll('[role="tabpanel"]'));
-
-      function setActive(idx){
-
-        tabs.forEach((t,i)=>{
-
-          const sel = i===idx; t.setAttribute('aria-selected', String(sel)); t.tabIndex = sel ? 0 : -1;
-
-        });
-
-        panels.forEach((p,i)=>{ p.hidden = (i!==idx); });
-
-      }
-
-      tabs.forEach((tab,idx)=>{
-
-        tab.addEventListener('click', ()=> setActive(idx));
-
-        tab.addEventListener('keydown', (e)=>{
-
-          const key = e.key; let next = idx;
-
-          if(key==='ArrowRight') next = (idx+1)%tabs.length;
-
-          if(key==='ArrowLeft')  next = (idx-1+tabs.length)%tabs.length;
-
-          if(key==='Home') next = 0; if(key==='End')  next = tabs.length-1;
-
-          if(next!==idx){ e.preventDefault(); tabs[next].focus(); setActive(next); }
-
-        });
-
-      });
-
-      setActive(0);
-
-    });
-
-  })();
-
-  /* THEME: single, resilient init */
-
-  (function () {
-
-    const THEMES = ['darkblue','skyblue','ochre','white'];
-
-    const KEY = 'yccc-theme';
-
-    const root = document.body;
-
-    function apply(theme){
-
-      if (!THEMES.includes(theme)) theme = 'white';
-
-      root.classList.remove(...THEMES.map(t=>'theme-'+t));
-
-      root.classList.add('theme-'+theme);
-
-      localStorage.setItem(KEY, theme);
-
-      document.querySelectorAll('.theme-toggle [data-theme]').forEach(btn=>{
-
-        btn.setAttribute('aria-pressed', String(btn.dataset.theme === theme));
-
-      });
-
-    }
-
-    function init(){
-
-      // wire up
-
-      document.querySelectorAll('.theme-toggle [data-theme]').forEach(btn=>{
-
-        const set=()=>apply(btn.dataset.theme);
-
-        btn.addEventListener('click', set);
-
-        btn.addEventListener('keydown', e=>{
-
-          if(e.key==='Enter'||e.key===' '){ e.preventDefault(); set(); }
-
-        });
-
-      });
-
-      // start from saved (or white)
-
-      apply(localStorage.getItem(KEY) || 'white');
-
-    }
-
-    if (document.readyState === 'loading') {
-
-      document.addEventListener('DOMContentLoaded', init);
-
-    } else {
-
-      init();
-
-    }
-
-  })();
-
-  /* init images */
-
-  applyPhotos();
-
-  </script>
-
-</body>
-
-</html>
+    <button type="button" data-theme="skyblue">Sky Blue
