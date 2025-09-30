@@ -33,3 +33,16 @@ body.theme-darkblue details,
 body.theme-darkblue details * {
   color: #111318 !important;
 }
+
+/* === Ensure bright text in Dark Blue panels === */
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) p,
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) li,
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) .lead,
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) strong {
+  color: #ffffff !important;   /* bright white text */
+}
+
+/* Keep bullet/marker and bold parts bright as well */
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) ul li::marker {
+  color: #ffffff !important;
+}
