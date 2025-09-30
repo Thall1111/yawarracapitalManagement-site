@@ -1,39 +1,3 @@
-/* === Dark Blue Fixes === */
-
-/* Keep normal panels light text on dark bg */
-body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) {
-  background: linear-gradient(180deg,#11162a,#0e1324);
-  color: #eef3ff !important;
-}
-
-body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) h1,
-body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) h2,
-body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) h3,
-body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) p,
-body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) li {
-  color: #eef3ff !important;
-}
-
-/* Cards and popups stay white with dark text */
-body.theme-darkblue .card,
-body.theme-darkblue .modal-content,
-body.theme-darkblue details {
-  background: #ffffff !important;
-  color: #111318 !important;
-  border-color: #e6e8ef !important;
-}
-
-body.theme-darkblue .card h3,
-body.theme-darkblue .card p,
-body.theme-darkblue .role,
-body.theme-darkblue .modal-content h3,
-body.theme-darkblue .modal-content p,
-body.theme-darkblue .modal-content li,
-body.theme-darkblue details,
-body.theme-darkblue details * {
-  color: #111318 !important;
-}
-
 /* === Ensure bright text in Dark Blue panels === */
 body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) p,
 body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) li,
