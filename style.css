@@ -100,3 +100,74 @@ body.theme-darkblue details *,
 body.theme-darkblue details p {
   color:#111318 !important;
 }
+/* === Dark Blue theme readability fixes === */
+
+/* 1. Panels (Differentiators, CAF, Services, Tab content) → dark with light text */
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) {
+  background: linear-gradient(180deg, #11162a, #0e1324) !important;
+  color: #eef3ff !important;
+  border-color: #202743 !important;
+}
+
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) h1,
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) h2,
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) h3,
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) p,
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) li,
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) .lead {
+  color: #eef3ff !important;
+}
+
+/* 2. Cards & Modals (Leadership, Advisors, Bio popups) → white with dark text */
+body.theme-darkblue .card,
+body.theme-darkblue .modal-content,
+body.theme-darkblue details {
+  background:#ffffff !important;
+  color:#111318 !important;
+  border-color:#e6e8ef !important;
+}
+
+body.theme-darkblue .card h3,
+body.theme-darkblue .card p,
+body.theme-darkblue .role,
+body.theme-darkblue .modal-content h3,
+body.theme-darkblue .modal-content p,
+body.theme-darkblue .modal-content li,
+body.theme-darkblue details *,
+body.theme-darkblue details p {
+  color:#111318 !important;
+}
+
+/* 3. Tabs → dark background with white text */
+body.theme-darkblue .tablist {
+  background:#0f1427;
+  border-color:#202743;
+}
+
+body.theme-darkblue .tab {
+  color:#e8eeff;
+}
+
+body.theme-darkblue .tab[aria-selected="true"] {
+  background:#151c36;
+  border-color:#2a3560;
+  color:#ffffff;
+}
+
+/* 4. Theme toggle buttons visible on dark background */
+body.theme-darkblue .theme-toggle {
+  background:#0f1427;
+  border-color:#202743;
+}
+
+body.theme-darkblue .theme-toggle button {
+  background:#151c36;
+  color:#eef3ff;
+  border-color:#2a3560;
+}
+
+body.theme-darkblue .theme-toggle button[aria-pressed="true"] {
+  background:#2a3560;
+  color:#ffffff;
+  outline:none;
+}
