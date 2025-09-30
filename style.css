@@ -94,37 +94,21 @@ body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) ol {
 /* Force white for bullets and numbers */
 body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) ul li::marker,
 body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) ol li::marker {
-  color: #ffffff !important;
-}
-.logo {
-  height: 42px;          /* fits neatly inside header */
-  max-width: 160px;
-  vertical-align: middle;
-}
 /* === Logo sizing & responsiveness === */
 .logo {
-  height: 50px;       /* keep logo consistent */
-  width: auto;        /* prevent stretching */
+  max-height: 48px;   /* fits neatly inside header */
+  width: auto;        /* keeps proportions */
+  display: inline-block;
+  vertical-align: middle;
   object-fit: contain;
-  display: block;
+}
+
+.head img.logo {
+  margin-top: 4px;   /* adjust if it’s not vertically centered */
 }
 
 @media (max-width: 768px) {
   .logo {
-    height: 40px;     /* smaller logo for mobile */
+    max-height: 40px;  /* smaller logo for mobile */
   }
-}
-.logo {
-  height: 40px;      /* keeps it at a nice size in the navbar */
-  width: auto;       /* keeps proportions */
-  display: block;
-}
-.head img.logo {
-  margin-top: 4px;   /* adjust until it’s centered */
-}/* Fix logo size in header */
-.logo {
-  max-height: 48px;   /* fits neatly in the header */
-  width: auto;        /* keeps correct proportions */
-  display: inline-block;
-  vertical-align: middle;
 }
