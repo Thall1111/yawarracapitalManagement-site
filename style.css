@@ -63,3 +63,21 @@ body.theme-darkblue .tablist{ background:#0f1427; border-color:#202743; }
 body.theme-darkblue .tab{ color:#e8eeff; }
 
 body.theme-darkblue .tab[aria-selected="true"]{ background:#151c36; border-color:#2a3560; color:#ffffff; }
+
+/* === Fix theme toggle visibility in Dark Blue === */
+body.theme-darkblue .theme-toggle {
+  background:#0f1427;   /* dark panel */
+  border-color:#202743;
+}
+
+body.theme-darkblue .theme-toggle button {
+  background:#151c36;   /* darker button background */
+  color:#eef3ff;        /* light text */
+  border-color:#2a3560;
+}
+
+body.theme-darkblue .theme-toggle button[aria-pressed="true"] {
+  background:#2a3560;   /* highlighted toggle */
+  color:#ffffff;
+  outline:none;
+}
