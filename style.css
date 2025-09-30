@@ -1,11 +1,65 @@
-.sl{
-  fill:none;
-  stroke-linecap:round;
-  stroke-width:2.2;
-  stroke-dasharray:1 14;
-  filter:url(#sl-glow);
-  opacity:.35;
+/* === Fix: readable cards & popups while in Dark Blue === */
+
+body.theme-darkblue .card,
+
+body.theme-darkblue .advisor-card,
+
+body.theme-darkblue .team-card,
+
+body.theme-darkblue details,
+
+body.theme-darkblue .modal-content{
+
+  background:#ffffff;
+
+  color:#111318;                 /* dark text */
+
+  border-color:#e6e8ef;
+
 }
-@keyframes sl-drift {
-  from{stroke-dashoffset:0}
-  to{stroke-dashoffset:-1200}
+
+body.theme-darkblue .card h3,
+
+body.theme-darkblue .card p,
+
+body.theme-darkblue .advisor-card h3,
+
+body.theme-darkblue .advisor-card p,
+
+body.theme-darkblue .role,
+
+body.theme-darkblue .modal-content h3,
+
+body.theme-darkblue .modal-content p,
+
+body.theme-darkblue .modal-content li,
+
+body.theme-darkblue details *,
+
+body.theme-darkblue details p { color:#111318 !important; }
+
+/* Keep Dark Blue UI readable elsewhere */
+
+body.theme-darkblue .panel:not(.card):not(.modal-content) p,
+
+body.theme-darkblue .panel:not(.card):not(.modal-content) li,
+
+body.theme-darkblue .panel:not(.card):not(.modal-content) .lead {
+
+  color:#eef3ff;                 /* light text on blue panels */
+
+}
+
+/* Toggle styling in Dark Blue */
+
+body.theme-darkblue .theme-toggle{ background:#0f1427; border-color:#202743; }
+
+body.theme-darkblue .theme-toggle button{ color:#eef3ff; border-color:#2a3560; }
+
+/* Make tablist readable in Dark Blue */
+
+body.theme-darkblue .tablist{ background:#0f1427; border-color:#202743; }
+
+body.theme-darkblue .tab{ color:#e8eeff; }
+
+body.theme-darkblue .tab[aria-selected="true"]{ background:#151c36; border-color:#2a3560; color:#ffffff; }
