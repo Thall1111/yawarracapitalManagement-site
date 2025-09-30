@@ -1,3 +1,32 @@
+Got it ✅ — I’ll stitch Chunks 1 → 9 into a single, full index.html for you.
+This will be copy-paste ready into your repo / GitHub Pages.
+
+It includes:
+
+Hero
+
+Mission, Vision, Differentiators
+
+Full Team (with bios + modal popup)
+
+Projects (tabs)
+
+Accelerator (tabs)
+
+CAF (with expandable <details>)
+
+Services
+
+Partnerships
+
+Footer + Theme Toggle + Songlines background
+
+
+
+---
+
+Full index.html
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,22 +35,10 @@
   <title>Yawarra Cultural Custodian Council · YCM</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --bg:#ffffff; --panel:#ffffff; --ink:#111318; --muted:#58606b;
-      --line:#e6e8ef; --accent:#2b8cff; --ochre:#c55410;
-    }
+    :root{--bg:#ffffff;--panel:#ffffff;--ink:#111318;--muted:#58606b;--line:#e6e8ef;--accent:#2b8cff;--ochre:#c55410;}
     *{box-sizing:border-box}
-    body {
-      margin:0; font-family:Inter,sans-serif;
-      background:var(--bg); color:var(--ink);
-      scroll-behavior:smooth;
-    }
-    .head {
-      position:fixed; top:0; left:0; right:0; height:64px;
-      display:flex; align-items:center; justify-content:space-between;
-      padding:0 24px; background:rgba(255,255,255,.75);
-      backdrop-filter:blur(8px); border-bottom:1px solid var(--line); z-index:40;
-    }
+    body{margin:0;font-family:Inter,sans-serif;background:var(--bg);color:var(--ink);scroll-behavior:smooth;}
+    .head{position:fixed;top:0;left:0;right:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:rgba(255,255,255,.75);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:40;}
     .brand{font-weight:800;font-size:14px;text-transform:uppercase;color:var(--ink);text-decoration:none;}
     .nav a{color:var(--ink);margin-left:22px;font-size:14px;font-weight:600;text-decoration:none;}
     .nav a:hover{color:var(--accent)}
@@ -42,6 +59,15 @@
     .tab[aria-selected="true"]{background:#f6f8fc;border-color:#dfe4ef;color:#0f1520;}
     .tabpanel{margin-top:10px;}
     footer{padding:28px 20px;text-align:center;color:#6f7b8f;border-top:1px solid var(--line);}
+    .theme-toggle{position:fixed;right:16px;bottom:16px;z-index:1000;display:flex;gap:8px;padding:8px;background:var(--panel);border:1px solid var(--line);border-radius:12px;}
+    .theme-toggle button{padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--ink);font-weight:600;font-size:12px;cursor:pointer;}
+    body.theme-darkblue{--bg:#0b1020;--panel:#11162a;--ink:#eef3ff;--muted:#b7c1d9;--line:#202743;--accent:#75aaff;}
+    body.theme-darkblue .card,body.theme-darkblue .modal-content{background:#fff;color:#111318;border-color:#e6e8ef;}
+    body.theme-darkblue .card h3,body.theme-darkblue .card p,body.theme-darkblue .modal-content *{color:#111318!important;}
+    body.theme-darkblue .panel:not(.card):not(.modal-content) p{color:#eef3ff;}
+    body.theme-darkblue .tablist{background:#0f1427;border-color:#202743;}
+    body.theme-darkblue .tab{color:#e8eeff;}
+    body.theme-darkblue .tab[aria-selected="true"]{background:#151c36;color:#fff;}
   </style>
 </head>
 <body>
@@ -201,28 +227,5 @@
   </section>
 
   <!-- Footer -->
-  <footer>© 2025 Yawarra Cultural Custodian Council · Yawarra Capital Management. All rights reserved.</footer>
+  <footer>© 2025 Yawarra Cultural Custodian Council · Yawarra Capital
 
-  <!-- Modal -->
-  <div id="popup" class="modal" role="dialog" aria-modal="true" aria-labelledby="popup-name">
-    <div class="modal-content">
-      <span class="close" aria-label="Close">&times;</span>
-      <h3 id="popup-name"></h3>
-      <p id="popup-role"></p>
-      <p id="popup-bio"></p>
-    </div>
-  </div>
-
-  <!-- Scripts -->
-  <script>
-    /* Songlines generator */
-    (function(){
-      const svg=document.getElementById('bg');
-      function r(a,b){return Math.random()*(b-a)+a}
-      function build(w,h,segs,y,amp,v){
-        const step=w/(segs-1);
-        const pts=Array.from({length:segs},(_,i)=>[i*step+r(-8,8),y+Math.sin(i*r(.6,.95))*amp+r(-v,v)]);
-        let d=`M ${pts[0][0]},${pts[0][1]}`;
-        for(let i=0;i<pts.length-1;i++){
-          const p0=pts[Math.max(0,i-1)],p1=pts[i],p2=pts[i+1],p3=pts[Math.min(pts.length-1,i+2)];
-          const c1=[p1[0]+
