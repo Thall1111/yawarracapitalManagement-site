@@ -101,3 +101,16 @@ body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) ol li::ma
   max-width: 160px;
   vertical-align: middle;
 }
+/* === Logo sizing & responsiveness === */
+.logo {
+  height: 50px;       /* keep logo consistent */
+  width: auto;        /* prevent stretching */
+  object-fit: contain;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .logo {
+    height: 40px;     /* smaller logo for mobile */
+  }
+}
