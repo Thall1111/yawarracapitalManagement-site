@@ -78,3 +78,21 @@ body.theme-darkblue .tab[aria-selected="true"] {
   border-color: #2a3560;
   color: #ffffff;
 }
+/* === Force Bright White Text in Panels on Dark Blue === */
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details),
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) h2,
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) h3,
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) p,
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) li,
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) strong,
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) .lead,
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) ul,
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) ol {
+  color: #ffffff !important;  /* force bright white text */
+}
+
+/* Force white for bullets and numbers */
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) ul li::marker,
+body.theme-darkblue .panel:not(.card):not(.modal-content):not(details) ol li::marker {
+  color: #ffffff !important;
+}
