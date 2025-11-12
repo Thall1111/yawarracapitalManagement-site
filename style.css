@@ -1,1 +1,18 @@
+/* Header/layout basics if not already inlined */
+.head{
+  position:fixed; top:0; left:0; right:0; height:64px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 24px; background:rgba(255,255,255,.75);
+  backdrop-filter:blur(8px); border-bottom:1px solid #e6e8ef; z-index:40;
+}
 
+/* Logo sizing in the fixed header */
+.logo{
+  height:28px; width:auto; display:block; object-fit:contain;
+}
+
+/* Optional: dark header text color against light bg */
+.brand{ text-decoration:none; color:#111318; font-weight:800; font-size:14px; letter-spacing:.08em; text-transform:uppercase; }
+
+.nav a{ color:#111318; text-decoration:none; margin-left:22px; font-size:14px; font-weight:600; opacity:.9; }
+.nav a:hover{ color:#2b8cff; }
